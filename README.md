@@ -20,3 +20,7 @@ ___
 在需要转md的文件路径下打开命令工具输入以下命令
  
  `i5ting_toc -f yourfile.md `
+ 
+也可以把写好的md更新在bash里一次性生成HTML
+ 
+ `bash create.sh`
