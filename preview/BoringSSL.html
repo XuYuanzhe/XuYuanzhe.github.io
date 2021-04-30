@@ -1,0 +1,144 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:BoringSSL</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<p>使用boringssl以及curl和nghttp2尝试获取 <a href="https://www.galerieslafayette.com/p/clavier+gamer+corsair+k55+rgb-corsair/300405645289/0">https://www.galerieslafayette.com/p/clavier+gamer+corsair+k55+rgb-corsair/300405645289/0</a> 的页面内容</p>
+<p>以下为研究过程：
+首先安装golang的最新版本
+编译boringssl</p>
+<pre><code>$ cd $HOME/src
+$ git clone https://boringssl.googlesource.com/boringssl
+$ cd boringssl
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_POSITION_INDEPENDENT_CODE=1 .. 
+$ make
+</code></pre><p>创建软连接：</p>
+<pre><code>$ cd ..
+$ mkdir lib
+$ cd lib
+$ ln -s ../build/ssl/libssl.a
+$ ln -s ../build/crypto/libcrypto.a
+</code></pre><p>从<a href="https://curl.haxx.se/download.html">https://curl.haxx.se/download.html</a> 下载源码包，解压并进入源码包根目录中
+确保LD_LIBRARY_PATH环境变量中包含 /path/to/curl/tree/lib，且PATH环境变量中包含 /path/to/curl/tree/bin</p>
+<pre><code>$ echo $LD_LIBRARY_PATH
+$ echo $PATH
+</code></pre><p>若环境变量中未包含路径，则需要添加至环境变量，并用“ : ”隔开（注意不要覆盖环境变量中原有的路径）</p>
+<pre><code>$ export LD_LIBRARY_PATH=/path/to/curl/tree/lib
+$ export PATH=/path/to/curl/tree/bin
+</code></pre><p><code>LIBS=-lpthread ./configure --prefix=/path/to/curl/tree --with-ssl=$HOME/src/boringssl</code></p>
+<p><code>make &amp;&amp; make install</code></p>
+<p>输入<code>which curl</code> 会提示 <code>/path/to/curl/tree/bin/curl</code>
+输入<code>curl --version</code> 显示 <code>curl 7.75.0 (x86_64-pc-linux-gnu) libcurl/7.75.0 BoringSSL</code> 则boringssl已经被编译至curl</p>
+<p>研究发现需要支持curl发送http2请求，而从刚才编译的curl信息里可以看到并未支持http2，想要支持http2需要依赖第三方库nghttp2</p>
+<p>首先从 <a href="https://github.com/nghttp2/nghttp2/releases">https://github.com/nghttp2/nghttp2/releases</a> 下载nghttp2</p>
+<pre><code>$ tar xf nghttp2-1.43.0.tar.bz2
+$ cd nghttp2-1.43.0
+$ ./configure
+$ make
+</code></pre><p>在编译的时候遇到问题需要python3.8以上作为默认python版本才可以继续执行
+选择pyenv控制python版本</p>
+<p>安装</p>
+<pre><code>$ git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+$ echo &#39;export PYENV_ROOT=&quot;$HOME/.pyenv&quot;&#39; &gt;&gt; ~/.bashrc
+$ echo &#39;export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;&#39; &gt;&gt; ~/.bashrc
+$ echo &#39;eval &quot;$(pyenv init -)&quot;&#39; &gt;&gt; ~/.bashrc
+$ exec $SHELL -l
+</code></pre><p>查看可安装的版本</p>
+<pre><code>$ pyenv install --list
+</code></pre><p>选择一个版本安装</p>
+<pre><code>$ pyenv install 3.8.8 -v
+</code></pre><p>更新数据库</p>
+<pre><code>$ pyenv rehash
+</code></pre><p>查看当前已安装的py版本</p>
+<pre><code>$ pyenv versions
+</code></pre><p>设置全局py版本</p>
+<pre><code>$ pyenv global 3.8.8
+</code></pre><p>确认py版本</p>
+<pre><code>$ python
+</code></pre><p>重新编译nghttp2并将boringssl编译进去</p>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
