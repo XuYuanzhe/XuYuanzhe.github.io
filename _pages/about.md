@@ -17,14 +17,14 @@ selected_papers: true # 展示 "selected={true}" 的文章
 social: true # 页面底部社交图标链接
 
 announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
+  enabled: false # includes a list of news items
+  scrollable: true # 如果有 limit 条以上的新闻，则添加垂直滚动条
   limit: 5 # leave blank to include all the news in the `_news` folder
 
 latest_posts:
   enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  scrollable: true # 如果有 limit 条以上的博客，则添加垂直滚动条
+  limit: 5 # leave blank to include all the blog posts
 ---
 
 吃得苦中苦方为人上人，我并不想做什么人上人，可这世间疾苦照样没能放过我

@@ -48,7 +48,7 @@ repo_trophies:
 
 navbar_fixed: true
 footer_fixed: true
-search_enabled: true
+search_enabled: false   # 导航栏搜索功能
 socials_in_search: true
 posts_in_search: true
 bib_search: true
@@ -96,13 +96,13 @@ pagination:
   enabled: true
 
 related_blog_posts:
-  enabled: true
+  enabled: false  # 全局禁用推荐相关文章
   max_related: 5
 
-# Giscus comments (RECOMMENDED)
+# Giscus 评论配置
 # Follow instructions on https://giscus.app/ to setup for your repo to fill out the information below.
 giscus:
-  repo: # <your-github-user-name>/<your-github-repo-name>
+  repo: XuYuanzhe # <your-github-user-name>/<your-github-repo-name>
   repo_id: # leave empty or specify your repo_id (see https://giscus.app/)
   category: Comments # name of the category under which discussions will be created
   category_id: # leave empty or specify your category_id (see https://giscus.app/)
