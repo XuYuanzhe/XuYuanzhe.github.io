@@ -13,8 +13,8 @@ profile:
     <p>求时十之一，丢时十之九。</p>
 
 
-selected_papers: true # 展示 "selected={true}" 的文章
-social: true # 页面底部社交图标链接
+selected_papers: false # 展示 "selected={true}" 的学术文章 「selected publications」
+social: true # 页面底部社交图标链接 在 _data/socials.yml 配置
 
 announcements:
   enabled: false # includes a list of news items
