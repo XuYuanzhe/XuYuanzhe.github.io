@@ -23,345 +23,334 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-a-post-with-plotly-js",
+        },{id: "post-使用-jekyll-搭建自己的博客",
         
-          title: "a post with plotly.js",
+          title: "使用 jekyll 搭建自己的博客",
         
-        description: "this is what included plotly.js code could look like",
+        description: "basic knowledge is required, but not too much",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/plotly/";
+            window.location.href = "/blog/2025/github-pages/";
           
         },
-      },{id: "post-a-post-with-image-galleries",
+      },{id: "post-一位父亲写给儿子的婚前寄语",
         
-          title: "a post with image galleries",
+          title: "一位父亲写给儿子的婚前寄语",
         
-        description: "this is what included image galleries could look like",
+        description: "a great great father",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/photo-gallery/";
+            window.location.href = "/blog/2025/father-to-son/";
           
         },
-      },{id: "post-a-post-with-tabs",
+      },{id: "post-人这一生为什么要读很多的书",
         
-          title: "a post with tabs",
+          title: "人这一生为什么要读很多的书？",
         
-        description: "this is what included tabs in a post could look like",
+        description: "why do people need to read a lot of books",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/tabs/";
+            window.location.href = "/blog/2025/why-need-read/";
           
         },
-      },{id: "post-a-post-with-typograms",
+      },{id: "post-思考和解决问题的方法",
         
-          title: "a post with typograms",
+          title: "思考和解决问题的方法",
         
-        description: "this is what included typograms code could look like",
+        description: "methods of thinking and problem-solving",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/typograms/";
+            window.location.href = "/blog/2022/solve-problem/";
           
         },
-      },{id: "post-a-post-that-can-be-cited",
+      },{id: "post-什么时候该离职",
         
-          title: "a post that can be cited",
+          title: "什么时候该离职？",
         
-        description: "this is what a post that can be cited looks like",
+        description: "when to leave",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/post-citation/";
+            window.location.href = "/blog/2021/when-to-leave/";
           
         },
-      },{id: "post-a-post-with-pseudo-code",
+      },{id: "post-三种成本",
         
-          title: "a post with pseudo code",
+          title: "三种成本",
         
-        description: "this is what included pseudo code could look like",
+        description: "three costs",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/pseudocode/";
+            window.location.href = "/blog/2021/three-costs/";
           
         },
-      },{id: "post-a-post-with-code-diff",
+      },{id: "post-三句义",
         
-          title: "a post with code diff",
+          title: "三句义",
         
-        description: "this is how you can display code diffs",
+        description: "simple understanding",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/code-diff/";
+            window.location.href = "/blog/2021/buddhism/";
           
         },
-      },{id: "post-a-post-with-advanced-image-components",
+      },{id: "post-印第安文化以及-goro-s",
         
-          title: "a post with advanced image components",
+          title: "印第安文化以及 Goro’s",
         
-        description: "this is what advanced image components could look like",
+        description: "simple record",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/advanced-images/";
+            window.location.href = "/blog/2021/indian-silver/";
           
         },
-      },{id: "post-a-post-with-vega-lite",
+      },{id: "post-内卷",
         
-          title: "a post with vega lite",
+          title: "内卷",
         
-        description: "this is what included vega lite code could look like",
+        description: "involution",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/vega-lite/";
+            window.location.href = "/blog/2021/involution/";
           
         },
-      },{id: "post-a-post-with-geojson",
+      },{id: "post-赛博朋克2077故事梗概",
         
-          title: "a post with geojson",
+          title: "赛博朋克2077故事梗概",
         
-        description: "this is what included geojson code could look like",
+        description: "John Wick or Johnny Silverhand",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2024/geojson-map/";
+            window.location.href = "/blog/2021/cyberpunk2077/";
           
         },
-      },{id: "post-a-post-with-echarts",
+      },{id: "post-包含各种组件的文章示例",
         
-          title: "a post with echarts",
-        
-        description: "this is what included echarts code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/echarts/";
-          
-        },
-      },{id: "post-a-post-with-chart-js",
-        
-          title: "a post with chart.js",
-        
-        description: "this is what included chart.js code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/chartjs/";
-          
-        },
-      },{id: "post-a-post-with-tikzjax",
-        
-          title: "a post with TikZJax",
-        
-        description: "this is what included TikZ code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/tikzjax/";
-          
-        },
-      },{id: "post-a-post-with-bibliography",
-        
-          title: "a post with bibliography",
-        
-        description: "an example of a blog post with bibliography",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/post-bibliography/";
-          
-        },
-      },{id: "post-a-post-with-jupyter-notebook",
-        
-          title: "a post with jupyter notebook",
-        
-        description: "an example of a blog post with jupyter notebook",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/jupyter-notebook/";
-          
-        },
-      },{id: "post-a-post-with-custom-blockquotes",
-        
-          title: "a post with custom blockquotes",
-        
-        description: "an example of a blog post with custom blockquotes",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/custom-blockquotes/";
-          
-        },
-      },{id: "post-a-post-with-table-of-contents-on-a-sidebar",
-        
-          title: "a post with table of contents on a sidebar",
-        
-        description: "an example of a blog post with table of contents on a sidebar",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/sidebar-table-of-contents/";
-          
-        },
-      },{id: "post-a-post-with-audios",
-        
-          title: "a post with audios",
-        
-        description: "this is what included audios could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/audios/";
-          
-        },
-      },{id: "post-a-post-with-videos",
-        
-          title: "a post with videos",
-        
-        description: "this is what included videos could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/videos/";
-          
-        },
-      },{id: "post-displaying-beautiful-tables-with-bootstrap-tables",
-        
-          title: "displaying beautiful tables with Bootstrap Tables",
-        
-        description: "an example of how to use Bootstrap Tables",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/tables/";
-          
-        },
-      },{id: "post-a-post-with-table-of-contents",
-        
-          title: "a post with table of contents",
-        
-        description: "an example of a blog post with table of contents",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/table-of-contents/";
-          
-        },
-      },{id: "post-a-post-with-giscus-comments",
-        
-          title: "a post with giscus comments",
-        
-        description: "an example of a blog post with giscus comments",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2022/giscus-comments/";
-          
-        },
-      },{id: "post-a-post-with-redirect",
-        
-          title: "a post with redirect",
-        
-        description: "you can also redirect to assets like pdf",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/assets/pdf/example_pdf.pdf";
-          
-        },
-      },{id: "post-a-post-with-diagrams",
-        
-          title: "a post with diagrams",
-        
-        description: "an example of a blog post with diagrams",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2021/diagrams/";
-          
-        },
-      },{id: "post-a-distill-style-blog-post",
-        
-          title: "a distill-style blog post",
+          title: "包含各种组件的文章示例",
         
         description: "an example of a distill-style blog post and main elements",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2021/distill/";
+            window.location.href = "/blog/2018/distill/";
           
         },
-      },{id: "post-a-post-with-twitter",
+      },{id: "post-高级图像组件",
         
-          title: "a post with twitter",
+          title: "高级图像组件",
         
-        description: "an example of a blog post with twitter",
+        description: "this is what advanced image components could look like",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2020/twitter/";
+            window.location.href = "/blog/2018/advanced-images/";
           
         },
-      },{id: "post-a-post-with-disqus-comments",
+      },{id: "post-图像库组件",
         
-          title: "a post with disqus comments",
+          title: "图像库组件",
         
-        description: "an example of a blog post with disqus comments",
+        description: "this is what included image galleries could look like",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2015/disqus-comments/";
+            window.location.href = "/blog/2018/photo-gallery/";
           
         },
-      },{id: "post-a-post-with-math",
+      },{id: "post-table-of-contents-目录样式-左侧",
         
-          title: "a post with math",
+          title: "Table of Contents 目录样式[左侧]",
         
-        description: "an example of a blog post with some math",
+        description: "an example of a blog post with table of contents on a sidebar",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2015/math/";
+            window.location.href = "/blog/2018/sidebar-table-of-contents/";
           
         },
-      },{id: "post-a-post-with-code",
+      },{id: "post-table-of-contents-目录样式-顶部",
         
-          title: "a post with code",
+          title: "Table of Contents 目录样式[顶部]",
         
-        description: "an example of a blog post with some code",
+        description: "an example of a blog post with table of contents",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2015/code/";
+            window.location.href = "/blog/2018/table-of-contents/";
           
         },
-      },{id: "post-a-post-with-images",
+      },{id: "post-tables-样式",
         
-          title: "a post with images",
+          title: "Tables 样式",
         
-        description: "this is what included images could look like",
+        description: "an example of how to use Bootstrap Tables",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2015/images/";
+            window.location.href = "/blog/2018/tables/";
           
         },
-      },{id: "post-a-post-with-formatting-and-links",
+      },{id: "post-custom-blockquotes-样式",
         
-          title: "a post with formatting and links",
+          title: "Custom Blockquotes 样式",
         
-        description: "march &amp; april, looking forward to summer",
+        description: "an example of a blog post with custom blockquotes",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2015/formatting-and-links/";
+            window.location.href = "/blog/2018/custom-blockquotes/";
+          
+        },
+      },{id: "post-引用样式",
+        
+          title: "引用样式",
+        
+        description: "this is what a post that can be cited looks like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/post-citation/";
+          
+        },
+      },{id: "post-视频支持",
+        
+          title: "视频支持",
+        
+        description: "this is what included videos could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/videos/";
+          
+        },
+      },{id: "post-音频支持",
+        
+          title: "音频支持",
+        
+        description: "this is what included audios could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/audios/";
+          
+        },
+      },{id: "post-chartjs-组件示例",
+        
+          title: "chartjs 组件示例",
+        
+        description: "this is what included chart.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/chartjs/";
+          
+        },
+      },{id: "post-diff-code-组件示例",
+        
+          title: "diff code 组件示例",
+        
+        description: "this is how you can display code diffs",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/code-diff/";
+          
+        },
+      },{id: "post-typograms-组件示例",
+        
+          title: "typograms 组件示例",
+        
+        description: "this is what included typograms code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/typograms/";
+          
+        },
+      },{id: "post-jupyter-组件示例",
+        
+          title: "jupyter 组件示例",
+        
+        description: "an example of a blog post with jupyter notebook",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/jupyter-notebook/";
+          
+        },
+      },{id: "post-tabs-组件示例",
+        
+          title: "tabs 组件示例",
+        
+        description: "this is what included tabs in a post could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/tabs/";
+          
+        },
+      },{id: "post-vega-lite-组件示例",
+        
+          title: "vega lite 组件示例",
+        
+        description: "this is what included vega lite code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/vega-lite/";
+          
+        },
+      },{id: "post-plotly-组件示例",
+        
+          title: "plotly 组件示例",
+        
+        description: "this is what included plotly.js code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/plotly/";
+          
+        },
+      },{id: "post-echarts-组件示例",
+        
+          title: "echarts 组件示例",
+        
+        description: "this is what included echarts code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/echarts/";
+          
+        },
+      },{id: "post-pseudocode-组件示例",
+        
+          title: "pseudocode 组件示例",
+        
+        description: "this is what included pseudo code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/pseudocode/";
+          
+        },
+      },{id: "post-geojson-组件示例",
+        
+          title: "geojson 组件示例",
+        
+        description: "this is what included geojson code could look like",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/geojson-map/";
           
         },
       },{id: "books-the-godfather",
