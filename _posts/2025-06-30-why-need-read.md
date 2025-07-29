@@ -5,9 +5,6 @@ date: 2025-06-30 15:00:00
 description: why do people need to read a lot of books
 tags: 阅读
 categories: 随笔
-featured: false         # 置顶
-related_posts: false    # 显示相关文章
-giscus_comments: false  # 评论区
 ---
 
 

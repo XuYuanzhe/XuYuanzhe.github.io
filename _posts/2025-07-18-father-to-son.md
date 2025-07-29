@@ -5,8 +5,6 @@ date: 2025-07-18 15:00:00
 description: a great great father
 tags: 家庭
 categories: 阅读
-featured: false         # 置顶
-related_posts: false    # 显示相关文章
 giscus_comments: false  # 评论区
 ---
 

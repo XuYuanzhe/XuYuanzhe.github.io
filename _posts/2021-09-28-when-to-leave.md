@@ -5,9 +5,6 @@ date: 2021-09-28 15:00:00
 description: when to leave
 tags: 职场
 categories: 杂谈
-featured: false         # 置顶
-related_posts: false    # 显示相关文章
-giscus_comments: false  # 评论区
 ---
 
 

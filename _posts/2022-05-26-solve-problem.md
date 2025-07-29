@@ -5,9 +5,6 @@ date: 2022-05-26 15:00:00
 description: methods of thinking and problem-solving
 tags: 职场
 categories: 杂谈
-featured: false         # 置顶
-related_posts: false    # 显示相关文章
-giscus_comments: false  # 评论区
 ---
 
 

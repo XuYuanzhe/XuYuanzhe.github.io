@@ -7,8 +7,7 @@ tags: 教学 Ruby
 categories: 技术
 featured: false         # 置顶
 related_posts: false    # 显示相关文章 全局已关闭
-giscus_comments: false  # giscus 评论
-disqus_comments: false  # DISQUS 评论
+giscus_comments: true   # giscus 评论
 thumbnail: /assets/img/posts/202507251033900.png    # 首页缩略图
 mermaid:
   enabled: true     # 流程图

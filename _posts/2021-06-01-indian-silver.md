@@ -5,9 +5,6 @@ date: 2021-06-01 15:00:00
 description: simple record
 tags: 文化 goros
 categories: 杂谈
-featured: false         # 置顶
-related_posts: false    # 显示相关文章
-giscus_comments: false  # 评论区
 ---
 
 
