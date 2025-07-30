@@ -45,6 +45,17 @@ ninja.data = [{
             window.location.href = "/blog/2025/father-to-son/";
           
         },
+      },{id: "post-有关于人工智能",
+        
+          title: "有关于人工智能",
+        
+        description: "all in ai",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/ai/";
+          
+        },
       },{id: "post-人这一生为什么要读很多的书",
         
           title: "人这一生为什么要读很多的书？",
