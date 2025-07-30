@@ -5,7 +5,7 @@ date: 2025-07-25 15:00:00
 description: basic knowledge is required, but not too much
 tags: 教学 Ruby
 categories: 技术
-featured: false         # 置顶
+featured: true         # 置顶
 related_posts: false    # 显示相关文章 全局已关闭
 giscus_comments: true   # giscus 评论
 thumbnail: /assets/img/posts/202507251033900.png    # 首页缩略图
@@ -147,7 +147,10 @@ cd <your-username>.github.io
 bundle exec jekyll serve
 ```
 
-注意：官方模板里支持 RSS 订阅 这可能导致项目无法启动，我的解决方法是注释掉 `_config.yml` 中的 `external_sources` 相关代码
+> ##### WARNING
+> 
+> 官方模板里支持 RSS 订阅 这可能导致项目无法启动，我的解决方法是注释掉 `_config.yml` 中的 `external_sources` 相关代码
+{: .block-warning }
 
 项目启动后可以在浏览器中访问 `http://localhost:4000` 查看效果，修改样式可以实时看到效果。
 
