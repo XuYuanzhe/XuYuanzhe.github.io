@@ -1,0 +1,151 @@
+---
+layout: post
+title: 个人简历模板
+date: 2022-06-26 15:00:00
+tags: 简历
+categories: 杂谈
+giscus_comments: true # 支持评论
+---
+
+<center>
+     <h1>许余生</h1>
+ </center>
+
+## 个人信息
+
+- 性 别：男&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp; 年 龄：18
+- 手 机：13014663969&emsp;&emsp;&emsp;&emsp;&emsp;邮 箱：XuYusheng@gmail.com
+- 专 业：软件工程&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 现 居：北京市 昌平区
+
+## 求职意向
+
+- 工作情况: 北京-全职
+- 期望职业: python / golang
+- 期望月薪: 面议
+
+## 工作及教育经历
+
+- 前任公司&emsp;&emsp;&emsp;&emsp;&emsp;2021.8~至今&emsp;&emsp;&emsp;&emsp;&emsp;事业部-部门名
+- 清华大学&emsp;&emsp;&emsp;&emsp;&emsp;2019.9~2021.7&emsp;&emsp;&emsp;&emsp; 软件工程-研究生
+- 北京大学&emsp;&emsp;&emsp;&emsp;&emsp;2015.9~2019.7&emsp;&emsp;&emsp;&emsp; 软件工程-本科
+
+## 专业技能
+
+- 熟练使用 Python，掌握 Go，了解 Java、Python、PHP 等编程语言。
+- 掌握基础数据结构和算法的基本原理。
+- 熟悉 Git 版本控制与项目管理流程。
+- 了解 Vue 前端框架，具备全栈开发的基础能力。
+- 等等。
+
+## 项目经历
+
+#### 1. **A_Project（2018.5～2018.9）**
+
+**项目描述：** 一句话讲清楚
+
+**主要职责：** 该项目为团队项目，本人主要负责xxx
+
+**关键技术：** 用了哪些技术，实现了什么功能
+
+**项目价值：** 这个功能被xx人使用
+
+#### 2. **B_Project（2018.10～2019.2）**
+
+**项目描述：** 说明白项目背景
+
+**主要职责：** 该项目为个人项目，本人独立完成
+
+**关键技术：** 用了哪些技术，实现了什么功能
+
+**项目价值：** 为xx节省了xx倍人效
+
+## 获奖经历
+
+- 学生社团优秀干部
+- 竞赛一等奖
+
+## 个人账号
+
+- blog 地址（我没有 写你自己的）
+- github 地址（https://github.com/XuYuanzhe）
+
+## 自我评价
+
+- 本人热爱编程，喜欢钻研技术 等等
+- 性格开朗，待人真诚 等等
+
+> ##### WARNING
+>
+> 不要全部照搬照抄！
+>
+> 从自己的优势出发改简历。如果是刚毕业没什么项目经验就多写校园经历、获奖经历、证书；相反如果已经有丰富的项目经验就应该重点描述项目，其他的信息带过。
+> {: .block-warning }
+
+```markdown
+<center>
+     <h1>许余生</h1>
+ </center>
+
+## 个人信息
+
+- 性 别：男&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp; 年 龄：18
+- 手 机：13014663969&emsp;&emsp;&emsp;&emsp;&emsp;邮 箱：XuYusheng@gmail.com
+- 专 业：软件工程&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 现 居：北京市 昌平区
+
+## 求职意向
+
+- 工作情况: 北京-全职
+- 期望职业: python / golang
+- 期望月薪: 面议
+
+## 工作及教育经历
+
+- 前任公司&emsp;&emsp;&emsp;&emsp;&emsp;2021.8~至今&emsp;&emsp;&emsp;&emsp;&emsp;事业部-部门名
+- 清华大学&emsp;&emsp;&emsp;&emsp;&emsp;2019.9~2021.7&emsp;&emsp;&emsp;&emsp; 软件工程-研究生
+- 北京大学&emsp;&emsp;&emsp;&emsp;&emsp;2015.9~2019.7&emsp;&emsp;&emsp;&emsp; 软件工程-本科
+
+## 专业技能
+
+- 熟练使用 Python，掌握 Go，了解 Java、Python、PHP 等编程语言。
+- 掌握基础数据结构和算法的基本原理。
+- 熟悉 Git 版本控制与项目管理流程。
+- 了解 Vue 前端框架，具备全栈开发的基础能力。
+- 等等。
+
+## 项目经历
+
+#### 1. **A_Project（2018.5～2018.9）**
+
+**项目描述：** 一句话讲清楚
+
+**主要职责：** 该项目为团队项目，本人主要负责xxx
+
+**关键技术：** 用了哪些技术，实现了什么功能
+
+**项目价值：** 这个功能被xx人使用
+
+#### 2. **B_Project（2018.10～2019.2）**
+
+**项目描述：** 说明白项目背景
+
+**主要职责：** 该项目为个人项目，本人独立完成
+
+**关键技术：** 用了哪些技术，实现了什么功能
+
+**项目价值：** 为xx节省了xx倍人效
+
+## 获奖经历
+
+- 学生社团优秀干部
+- 竞赛一等奖
+
+## 个人账号
+
+- blog 地址（我没有 写你自己的）
+- github 地址（https://github.com/XuYuanzhe）
+
+## 自我评价
+
+- 本人热爱编程，喜欢钻研技术 等等
+- 性格开朗，待人真诚 等等
+```

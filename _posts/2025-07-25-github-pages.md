@@ -5,20 +5,21 @@ date: 2025-07-25 15:00:00
 description: basic knowledge is required, but not too much
 tags: 教学 Ruby
 categories: 技术
-featured: true         # 置顶
-related_posts: false    # 显示相关文章 全局已关闭
-giscus_comments: true   # giscus 评论
-thumbnail: /assets/img/posts/202507251033900.png    # 首页缩略图
+featured: false # 置顶
+related_posts: false # 显示相关文章 全局已关闭
+giscus_comments: true # giscus 评论
+thumbnail: /assets/img/posts/202507251102553.png # 首页缩略图
 mermaid:
-  enabled: true     # 流程图
-  zoomable: true    # 允许缩放
+  enabled: true # 流程图
+  zoomable: true # 允许缩放
 ---
 
-
 Jekyll有很多主题可以使用，下面是一些常用的主题：
+
 > https://github.com/topics/jekyll-theme
 
 本人使用的是al-folio主题，主题地址在这里：
+
 > https://github.com/alshedivat/al-folio
 
 ## 一、基于模板创建 Github Pages 仓库
@@ -33,17 +34,16 @@ https://github.com/new?template_name=al-folio&template_owner=alshedivat
 
 <img src="/assets/img/posts/202507251033900.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
-
 ### step2
 
 进入新仓库依次找到 `Settings -> Actions -> General -> Workflow permissions` 授予读写权限
 
 <img src="/assets/img/posts/202507251038571.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
 
-
 ### step3
 
 修改 `_config.yml` 文件中的 `url` 和 `baseurl` 字段：
+
 1. 把 url 设置成 `<your-github-username>.github.io`
 2. 把 baseurl 设置成空字符串
 
@@ -57,11 +57,9 @@ https://github.com/new?template_name=al-folio&template_owner=alshedivat
 
 现在除了 `main` 分支还自动创建了一个 `gh-pages` 分支
 
-
 ### step5
 
 进入 `Settings -> Pages -> Build and deployment` 修改 branch 从 `main` 切换到 `gh-pages` 点击 save 保存
-
 
 ### step6
 
@@ -79,12 +77,12 @@ https://github.com/new?template_name=al-folio&template_owner=alshedivat
 $ git clone git@github.com:<your-username>/<your-repo-name>.git
 ```
 
-
 ## 2. 本地编辑
 
 官方建议使用 docker 环境 我这里使用的本地环境
 
 al-folio 的官方文档参考：
+
 > https://github.com/alshedivat/al-folio/blob/main/INSTALL.md
 
 我这里使用 mac 电脑演示
@@ -92,11 +90,13 @@ al-folio 的官方文档参考：
 ### step1 Ruby
 
 安装 ruby
+
 ```shell
 brew install ruby
 ```
 
 查看安装信息
+
 ```shell
 brew install info
 ```
@@ -104,7 +104,6 @@ brew install info
 执行这个语句将我们自己安装的 ruby 添加到环境变量中（macOS 系统自带 ruby 我们用自己安装）
 
 <img src="/assets/img/posts/202507241740123.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
 
 查看 ruby 版本
 
@@ -128,16 +127,16 @@ source ~/.zshrc
 ```
 
 查看 jekyll 版本
+
 ```shell
 jekyll -v
 ```
-
 
 ### step3 Start
 
 进入项目目录
 
-```shell    
+```shell
 cd <your-username>.github.io
 ```
 
@@ -148,9 +147,9 @@ bundle exec jekyll serve
 ```
 
 > ##### WARNING
-> 
+>
 > 官方模板里支持 RSS 订阅 这可能导致项目无法启动，我的解决方法是注释掉 `_config.yml` 中的 `external_sources` 相关代码
-{: .block-warning }
+> {: .block-warning }
 
 项目启动后可以在浏览器中访问 `http://localhost:4000` 查看效果，修改样式可以实时看到效果。
 
@@ -168,7 +167,7 @@ tags: Ruby              # 标签
 categories: tech        # 分类
 featured: false         # 置顶
 related_posts: false    # 支持显示相关文章 全局已关闭
-giscus_comments: false  # 支持 giscus 评论
+giscus_comments: false  # 支持评论
 disqus_comments: false  # 支持 DISQUS 评论
 pretty_table: true      # 支持 表
 tabs: true              # 支持 tabs
@@ -195,3 +194,13 @@ chart:
   echarts: true     # 支持 echarts 图表
   chartjs: true     # 支持 chart.js 图表
 ```
+
+添加完文章后，可以通过 `npx prettier --write "**/*.md"` 来检查 `_posts` 目录下的文章格式是否正确。
+
+安装 prettier 工具很简单，只需要执行 `npm install --save-dev prettier`
+
+如果安装成功执行报错：
+```shell
+[error] Cannot find package '@shopify/prettier-plugin-liquid' imported from /Users/xuyuanzhe/path/XuYuanzhe.github.io/_posts/noop.js
+```
+是因为插件缺失，安装一下 Shopify 插件即可 `npm install --save-dev @shopify/prettier-plugin-liquid`
