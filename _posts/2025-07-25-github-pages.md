@@ -200,7 +200,9 @@ chart:
 安装 prettier 工具很简单，只需要执行 `npm install --save-dev prettier`
 
 如果安装成功执行报错：
+
 ```shell
 [error] Cannot find package '@shopify/prettier-plugin-liquid' imported from /Users/xuyuanzhe/path/XuYuanzhe.github.io/_posts/noop.js
 ```
+
 是因为插件缺失，安装一下 Shopify 插件即可 `npm install --save-dev @shopify/prettier-plugin-liquid`
