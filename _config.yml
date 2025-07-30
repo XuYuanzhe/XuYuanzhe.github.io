@@ -87,7 +87,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: 许元喆的个人博客 # blog_name will be displayed in your blog page
-blog_description: 技术 & 随笔 & 杂谈 & 玄学
+blog_description: 技术 & 杂谈 & 玄学 & EDC
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -247,21 +247,21 @@ terser:
     drop_console: true
 
 # -----------------------------------------------------------------------------
-# Jekyll Archives
+# Jekyll Archives 归档
 # -----------------------------------------------------------------------------
 
 jekyll-archives:
   posts:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
     permalinks:
-      year: "/blog/:year/"
-      tags: "/blog/:type/:name/"
-      categories: "/blog/:type/:name/"
+      year: "/blog/:year/"                # 按年份归档的URL（如 /blog/2024/）
+      tags: "/blog/:type/:name/"          # 标签归档的URL（如 /blog/tags/AI/）
+      categories: "/blog/:type/:name/"    # 分类归档的URL（如 /blog/categories/技术/）
   books:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
-display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] # these tags will be displayed on the front page of your blog
-display_categories: ["external-services"] # these categories will be displayed on the front page of your blog
+display_tags: ["AI", "Python", "Golang", "网络", "教学"]  # 这些标签将显示在您博客的首页上
+display_categories: ["技术", "杂谈", "玄学", "EDC"]  # 这些类别将显示在您博客的首页上
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
