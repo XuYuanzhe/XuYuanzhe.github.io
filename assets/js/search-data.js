@@ -67,6 +67,39 @@ ninja.data = [{
             window.location.href = "/blog/2025/why-need-read/";
           
         },
+      },{id: "post-nginx-编译与安装及自签名-ssl-证书生成与配置",
+        
+          title: "Nginx 编译与安装及自签名 SSL 证书生成与配置",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/nginx-https-config/";
+          
+        },
+      },{id: "post-我的笔记",
+        
+          title: "我的笔记",
+        
+        description: "some private goods",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/my-notes/";
+          
+        },
+      },{id: "post-个人简历模板",
+        
+          title: "个人简历模板",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/resume-template/";
+          
+        },
       },{id: "post-思考和解决问题的方法",
         
           title: "思考和解决问题的方法",
@@ -78,6 +111,17 @@ ninja.data = [{
             window.location.href = "/blog/2022/solve-problem/";
           
         },
+      },{id: "post-dns协议",
+        
+          title: "DNS协议",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/dns-protocol/";
+          
+        },
       },{id: "post-什么时候该离职",
         
           title: "什么时候该离职？",
@@ -87,6 +131,28 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2021/when-to-leave/";
+          
+        },
+      },{id: "post-git工作流规范",
+        
+          title: "Git工作流规范",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/git-workflow/";
+          
+        },
+      },{id: "post-一些编程书籍资源",
+        
+          title: "一些编程书籍资源",
+        
+        description: "some books",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/books/";
           
         },
       },{id: "post-三种成本",
@@ -111,6 +177,17 @@ ninja.data = [{
             window.location.href = "/blog/2021/buddhism/";
           
         },
+      },{id: "post-既然有-http-请求-为什么还要用-rpc-调用",
+        
+          title: "既然有 HTTP 请求，为什么还要用 RPC 调用？",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/http-rpc/";
+          
+        },
       },{id: "post-印第安文化以及-goro-s",
         
           title: "印第安文化以及 Goro’s",
@@ -122,6 +199,28 @@ ninja.data = [{
             window.location.href = "/blog/2021/indian-silver/";
           
         },
+      },{id: "post-vim-command-常用操作",
+        
+          title: "Vim Command 常用操作",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/vim-command/";
+          
+        },
+      },{id: "post-使用http-2-0-进行反爬",
+        
+          title: "使用Http/2.0 进行反爬",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/http2/";
+          
+        },
       },{id: "post-内卷",
         
           title: "内卷",
@@ -131,6 +230,17 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2021/involution/";
+          
+        },
+      },{id: "post-boringssl-实验",
+        
+          title: "BoringSSL 实验",
+        
+        description: "experiment",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2021/boringSSL/";
           
         },
       },{id: "post-赛博朋克2077故事梗概",

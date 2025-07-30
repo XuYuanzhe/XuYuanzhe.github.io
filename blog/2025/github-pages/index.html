@@ -10,7 +10,7 @@
 </code></pre></div></div> <p>查看 jekyll 版本</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll <span class="nt">-v</span>
 </code></pre></div></div> <h3 id="step3-start">step3 Start</h3> <p>进入项目目录</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> &lt;your-username&gt;.github.io
 </code></pre></div></div> <p>启动项目</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
-</code></pre></div></div> <blockquote class="block-warning"> <h5 id="warning">WARNING</h5> <p>官方模板里支持 RSS 订阅 这可能导致项目无法启动，我的解决方法是注释掉 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中的 <code class="language-plaintext highlighter-rouge">external_sources</code> 相关代码</p> </blockquote> <p>项目启动后可以在浏览器中访问 <code class="language-plaintext highlighter-rouge">http://localhost:4000</code> 查看效果，修改样式可以实时看到效果。</p> <p>enjoy ✌︎(ツ)ɔ</p> <h3 id="step4-一些关键字">step4 一些关键字</h3> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>layout: post    # 分类
+</code></pre></div></div> <blockquote> <h5 id="warning">WARNING</h5> <p class="block-warning">官方模板里支持 RSS 订阅 这可能导致项目无法启动，我的解决方法是注释掉 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中的 <code class="language-plaintext highlighter-rouge">external_sources</code> 相关代码</p> </blockquote> <p>项目启动后可以在浏览器中访问 <code class="language-plaintext highlighter-rouge">http://localhost:4000</code> 查看效果，修改样式可以实时看到效果。</p> <p>enjoy ✌︎(ツ)ɔ</p> <h3 id="step4-一些关键字">step4 一些关键字</h3> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>layout: post    # 分类
 title: Test     # 标题
 date: 2025-07-25 15:00:00           # 创建时间
 last_updated: 2025-07-26 15:00:00   # 最后更新时间
@@ -19,7 +19,7 @@ tags: Ruby              # 标签
 categories: tech        # 分类
 featured: false         # 置顶
 related_posts: false    # 支持显示相关文章 全局已关闭
-giscus_comments: false  # 支持 giscus 评论
+giscus_comments: false  # 支持评论
 disqus_comments: false  # 支持 DISQUS 评论
 pretty_table: true      # 支持 表
 tabs: true              # 支持 tabs
@@ -45,7 +45,8 @@ chart:
   vega_lite: true   # 支持 vega lite 图表
   echarts: true     # 支持 echarts 图表
   chartjs: true     # 支持 chart.js 图表
-</code></pre></div></div> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
+</code></pre></div></div> <p>添加完文章后，可以通过 <code class="language-plaintext highlighter-rouge">npx prettier --write "**/*.md"</code> 来检查 <code class="language-plaintext highlighter-rouge">_posts</code> 目录下的文章格式是否正确。</p> <p>安装 prettier 工具很简单，只需要执行 <code class="language-plaintext highlighter-rouge">npm install --save-dev prettier</code></p> <p>如果安装成功执行报错：</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>error] Cannot find package <span class="s1">'@shopify/prettier-plugin-liquid'</span> imported from /Users/xuyuanzhe/path/XuYuanzhe.github.io/_posts/noop.js
+</code></pre></div></div> <p>是因为插件缺失，安装一下 Shopify 插件即可 <code class="language-plaintext highlighter-rouge">npm install --save-dev @shopify/prettier-plugin-liquid</code></p> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
       let giscusTheme = determineComputedTheme();
       let giscusAttributes = {
         src: 'https://giscus.app/client.js',
