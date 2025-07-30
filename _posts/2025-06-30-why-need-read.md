@@ -4,7 +4,7 @@ title: 人这一生为什么要读很多的书？
 date: 2025-06-30 15:00:00
 description: why do people need to read a lot of books
 tags: 阅读
-categories: 随笔
+categories: 杂谈
 ---
 
 > 塑料袋理论
