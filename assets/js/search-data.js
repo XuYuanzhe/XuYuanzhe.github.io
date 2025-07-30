@@ -265,6 +265,17 @@ ninja.data = [{
             window.location.href = "/blog/2018/distill/";
           
         },
+      },{id: "post-edc-大饱眼福",
+        
+          title: "EDC 大饱眼福",
+        
+        description: "玩到最后就是拍照",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2018/favorite-edc/";
+          
+        },
       },{id: "post-高级图像组件",
         
           title: "高级图像组件",
