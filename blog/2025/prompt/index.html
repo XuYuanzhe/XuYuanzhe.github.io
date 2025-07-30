@@ -1,0 +1,82 @@
+<!DOCTYPE html> <html lang="zh-CN"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> 提示词 | Xu Yuanzhe </title> <meta name="author" content="Xu Yuanzhe"> <meta name="description" content="prompt"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%8C%9A&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://xuyuanzhe.github.io/blog/2025/prompt/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Xu</span> Yuanzhe </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">关于我 </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">博客 </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">GitHub仓库 </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">提示词</h1> <p class="post-meta"> 创建于 2025 年 07 月 12 日 </p> <p class="post-tags"> <a href="/blog/2025"> <i class="fa-solid fa-calendar fa-sm"></i> 2025 </a>   ·   <a href="/blog/tag/ai"> <i class="fa-solid fa-hashtag fa-sm"></i> AI</a>   <a href="/blog/tag/prompt"> <i class="fa-solid fa-hashtag fa-sm"></i> Prompt</a>   ·   <a href="/blog/category/%E6%8A%80%E6%9C%AF"> <i class="fa-solid fa-tag fa-sm"></i> 技术</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h2 id="什么是-prompt">什么是 Prompt？</h2> <p>它是给 AI 模型的指令。 它可以是一个问题、一段文字描述，甚至可以是带有一堆参数的文字描述。 AI 模型会基于 prompt 所提供的信息，生成对应的文本，亦或者图片。 写好一个 Prompt应该包含以下原则：</p> <ol> <li>包含完整的信息</li> <li>简洁易懂，并减少歧义</li> <li>使用正确的语法、拼写， 分隔符，以及标点</li> <li>请求结构化的输出（json）</li> <li>检查假设（如果…）</li> <li>使用示例（提供例子）</li> <li>从简单的先开始，并给模型多一点耐心和思考的时间</li> </ol> <h2 id="什么是-prompt-engineering">什么是 Prompt Engineering？</h2> <p>Prompt Engineering 是一种人工智能（AI）技术，它通过设计和改进 AI 的 prompt 来提高 AI 的表现。Prompt Engineering 的目标是创建高度有效和可控的 AI 系统，使其能够准确、可靠地执行特定任务。</p> <blockquote> <p>现在 AI 的发展还比较早期，了解和学习 PE 价值相对比较大，但长远来看可能会被淘汰。</p> </blockquote> <h2 id="prompt-engineering-有哪些框架">Prompt Engineering 有哪些框架？</h2> <p>ICIO 框架</p> <ul> <li>Instruction： 指令，即你希望模型执行的具体任务。</li> <li>Context： 背景信息，或者说是上下文信息，这可以引导模型做出更好的反应。</li> <li>Input Data： 输入数据，告知模型需要处理的数据。</li> <li>Output Indicator： 输出指示器，告知模型我们要输出的类型或格式。</li> </ul> <hr> <p>CRISPE 框架</p> <ul> <li>Capacity and Role：指定 AI 在交互中扮演的角色。</li> <li>Insight：提供背景和上下文。</li> <li>Statement：你要求 AI 做什么。</li> <li>Personality：输出的类型和风格。</li> <li>Experiment：输出多个例子。</li> </ul> <hr> <p>TASTE 框架</p> <ul> <li>Task：任务。写一篇关于数据隐私重要性的简短博客文章。</li> <li>Audience：目标受众。普通的互联网用户，非技术背景。</li> <li>Structure：结构。文章需要有明确的开头、中间讨论和结尾，开头提出问题，中间介绍原因和印象，结尾提供建议。</li> <li>Tone：语气。采用友好、易懂的语气。</li> <li>Example：示例。类似《纽约时报》科技专栏的风格。</li> </ul> <hr> <p>ALIGN 框架</p> <ul> <li>Aim：目标。创建一篇关于”可持续发展”的文章，解释其核心理念。</li> <li>Level：难度级别。适合高中生阅读，不需要专业术语。</li> <li>Input：输入。提供目前的环境问题的背景，讨论应对全球变暖的策略。</li> <li>Guidelines：指导原则。文章应使用简洁明了的语言，并避免复杂的技术概念。</li> <li>Novelty：新颖性。要求结合最新的环境数据，提出新颖的观点和解决方案。</li> </ul> <h2 id="分享一段批判思维的-prompt">分享一段批判思维的 prompt</h2> <p>最少在目前阶段，Prompt 依然很重要。好的 Prompt 所带来的差别，可以大于同类模型的性能差别。以下是一段批判性思维提示词，来自 <a href="https://www.reddit.com/" rel="external nofollow noopener" target="_blank">reddit</a>。它很适合检查想法、分解问题、理性分析。</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**角色与目标**</span>
+
+你是一位擅长苏格拉底式对话的专家型思辨伙伴，致力于帮助我以严谨和客观的方式分析一个主题或问题。不要直接给出答案，而是引导我一步步完成五个阶段的批判性思维流程。在每个阶段都直接与我对话，要求我提供反馈或观点后再进入下一步。
+
+<span class="gs">**主题 / 问题**</span>
+
+<span class="se">\[</span>在此填写你希望深入研究的难题，或你需要解决的问题。]
+
+<span class="gs">**流程说明**</span>
+
+请按照以下五个阶段<span class="ge">*逐一*</span>进行。在完成每一阶段后，请先征求我的意见，再继续进入下一阶段。
+
+<span class="gs">**阶段一：收集并审视证据**</span>
+找出核心事实与数据，质疑一切。
+<span class="p">
+-</span> 这条信息从哪里来的？
+<span class="p">-</span> 是谁资助的？
+<span class="p">-</span> 样本量真实吗？
+<span class="p">-</span> 这些数据现在还有相关性吗？
+<span class="p">-</span> 有没有相矛盾的数据？
+
+<span class="gs">**阶段二：识别并质疑假设**</span>
+揭示支撑论点的潜在信念。
+<span class="p">
+-</span> 我们默认哪些是事实？
+<span class="p">-</span> 我自己有哪些隐藏偏见？
+<span class="p">-</span> 这个结论在别处也成立吗？
+<span class="p">-</span> 如果我们错了会怎样？反面立场是什么？
+
+<span class="gs">**阶段三：探索多元视角**</span>
+跳出自己的认知圈层。
+<span class="p">
+-</span> 谁不同意这个观点？为什么？
+<span class="p">-</span> 不同背景的人会怎么看？
+<span class="p">-</span> 谁是赢家，谁是输家？
+<span class="p">-</span> 我们遗漏了谁的声音？
+
+<span class="gs">**阶段四：提出其他可能**</span>
+跳脱思维定势。
+<span class="p">
+-</span> 有没有别的切入角度？
+<span class="p">-</span> 当前方案的反面是什么？
+<span class="p">-</span> 能否整合不同思路？
+<span class="p">-</span> 我们还没试过什么？
+
+<span class="gs">**阶段五：描绘并评估影响**</span>
+往前看。每个解决方案都会带来新的问题。
+<span class="p">
+-</span> 第一、第二、第三层影响是什么？
+<span class="p">-</span> 谁受益，谁受损？
+<span class="p">-</span> 可能会引发哪些新问题？
+
+<span class="gs">**最终综合**</span>
+
+在完成所有阶段后，输出一份综合总结，包含最可信的证据、关键假设、多元观点，以及权衡各种替代方案及其影响后得出的最终建议。
+</code></pre></div></div> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
+      let giscusTheme = determineComputedTheme();
+      let giscusAttributes = {
+        src: 'https://giscus.app/client.js',
+        'data-repo': 'XuYuanzhe/XuYuanzhe.github.io',
+        'data-repo-id': 'R_kgDOPSYiIg',
+        'data-category': 'Announcements',
+        'data-category-id': 'DIC_kwDOPSYiIs4CtexH',
+        'data-mapping': 'title',
+        'data-strict': '1',
+        'data-reactions-enabled': '1',
+        'data-emit-metadata': '0',
+        'data-input-position': 'bottom',
+        'data-theme': giscusTheme,
+        'data-lang': 'zh-CN',
+        crossorigin: 'anonymous',
+        async: '',
+      };
+
+      let giscusScript = document.createElement('script');
+      Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
+      document.getElementById('giscus_thread').appendChild(giscusScript);
+    </script> <noscript>Please enable JavaScript to view the <a href="http://giscus.app/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by giscus.</a> </noscript> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Xu Yuanzhe. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

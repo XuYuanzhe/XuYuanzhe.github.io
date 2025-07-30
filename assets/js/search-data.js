@@ -45,6 +45,17 @@ ninja.data = [{
             window.location.href = "/blog/2025/father-to-son/";
           
         },
+      },{id: "post-提示词",
+        
+          title: "提示词",
+        
+        description: "prompt",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/prompt/";
+          
+        },
       },{id: "post-有关于人工智能",
         
           title: "有关于人工智能",
