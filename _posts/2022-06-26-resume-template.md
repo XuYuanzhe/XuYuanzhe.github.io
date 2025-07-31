@@ -2,7 +2,7 @@
 layout: post
 title: 个人简历模板
 date: 2022-06-26 15:00:00
-tags: 简历
+tags: 求职
 categories: 杂谈
 giscus_comments: true # 支持评论
 ---

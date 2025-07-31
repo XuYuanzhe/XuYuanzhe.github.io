@@ -2,7 +2,7 @@
 layout: post
 title: Vim Command 常用操作
 date: 2021-05-31 15:00:00
-tags: Vim
+tags: Vim Linux
 categories: 技术
 giscus_comments: true # 支持评论
 ---
