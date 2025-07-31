@@ -12,7 +12,6 @@ profile:
     <p>富贵险中求，也在险中丢，</p> 
     <p>求时十之一，丢时十之九。</p>
 
-
 selected_papers: false # 展示 "selected={true}" 的学术文章 「selected publications」
 social: true # 页面底部社交图标链接 在 _data/socials.yml 配置
 
