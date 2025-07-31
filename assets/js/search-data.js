@@ -23,7 +23,51 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-使用-jekyll-搭建自己的博客",
+        },{id: "post-记忆策略与技术实现",
+        
+          title: "记忆策略与技术实现",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/memory/";
+          
+        },
+      },{id: "post-mcp-架构设计模式",
+        
+          title: "MCP 架构设计模式",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/mcp-design/";
+          
+        },
+      },{id: "post-函数调用与上下文协议",
+        
+          title: "函数调用与上下文协议",
+        
+        description: "function calling &amp; model context protocol",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/mcp/";
+          
+        },
+      },{id: "post-langchain-学习",
+        
+          title: "LangChain 学习",
+        
+        description: "LangChain中文文档：https://www.langchain.asia/",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/langchain/";
+          
+        },
+      },{id: "post-使用-jekyll-搭建自己的博客",
         
           title: "使用 jekyll 搭建自己的博客",
         
@@ -43,6 +87,17 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2025/father-to-son/";
+          
+        },
+      },{id: "post-智能体与工作流",
+        
+          title: "智能体与工作流",
+        
+        description: "agent &amp; workflow",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/aigc/";
           
         },
       },{id: "post-提示词",
@@ -78,6 +133,17 @@ ninja.data = [{
             window.location.href = "/blog/2025/why-need-read/";
           
         },
+      },{id: "post-面试准备思路",
+        
+          title: "面试准备思路",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/interview/";
+          
+        },
       },{id: "post-nginx-编译与安装及自签名-ssl-证书生成与配置",
         
           title: "Nginx 编译与安装及自签名 SSL 证书生成与配置",
@@ -89,6 +155,17 @@ ninja.data = [{
             window.location.href = "/blog/2024/nginx-https-config/";
           
         },
+      },{id: "post-linux-操作系统对log的一些处理手段的记录",
+        
+          title: "Linux 操作系统对log的一些处理手段的记录",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/grep/";
+          
+        },
       },{id: "post-我的笔记",
         
           title: "我的笔记",
@@ -98,6 +175,17 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2023/my-notes/";
+          
+        },
+      },{id: "post-git工作流规范",
+        
+          title: "Git工作流规范",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/git-workflow/";
           
         },
       },{id: "post-个人简历模板",
@@ -142,17 +230,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2021/when-to-leave/";
-          
-        },
-      },{id: "post-git工作流规范",
-        
-          title: "Git工作流规范",
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2021/git-workflow/";
           
         },
       },{id: "post-一些编程书籍资源",

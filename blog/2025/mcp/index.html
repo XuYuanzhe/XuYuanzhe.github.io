@@ -1,0 +1,97 @@
+<!DOCTYPE html> <html lang="zh-CN"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> 函数调用与上下文协议 | Xu Yuanzhe </title> <meta name="author" content="Xu Yuanzhe"> <meta name="description" content="function calling &amp; model context protocol"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" integrity="sha256-uRX+PiRTR4ysKFRCykT8HLuRCub26LgXJZym3Yeom1c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%8C%9A&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://xuyuanzhe.github.io/blog/2025/mcp/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Xu</span> Yuanzhe </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">关于我 </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">博客 </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">GitHub仓库 </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">函数调用与上下文协议</h1> <p class="post-meta"> 创建于 2025 年 07 月 27 日 </p> <p class="post-tags"> <a href="/blog/2025"> <i class="fa-solid fa-calendar fa-sm"></i> 2025 </a>   ·   <a href="/blog/tag/ai"> <i class="fa-solid fa-hashtag fa-sm"></i> AI</a>   <a href="/blog/tag/mcp"> <i class="fa-solid fa-hashtag fa-sm"></i> MCP</a>   <a href="/blog/tag/fc"> <i class="fa-solid fa-hashtag fa-sm"></i> FC</a>   ·   <a href="/blog/category/%E6%8A%80%E6%9C%AF"> <i class="fa-solid fa-tag fa-sm"></i> 技术</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h2 id="什么是函数调用-function-calling">什么是函数调用 function calling？</h2> <p>一种机制，允许大语言模型 LLM 直接调用预定义函数的能力，允许模型生成参数并整合结果。</p> <p>解决大模型两大缺陷：</p> <ul> <li>没有最新信息，不具备时效性。</li> <li>没有真正的逻辑，本质上是概率学。</li> </ul> <blockquote> <p>eg：向 LLM 发送以下提示：“特斯拉当前的股价是多少？”</p> <p>得到的答案要么是“幻觉”，要么是“我没有实时数据，无法告诉你”。</p> </blockquote> <p>FC 的特点：</p> <ul> <li>极快（无网络延迟）</li> <li>固定模式（输入输出明确）</li> <li>不依赖记忆（单次调用）</li> </ul> <h2 id="什么是模型上下文协议-mcp-">什么是模型上下文协议 MCP ？</h2> <p>MCP，全称为 Model Context Protocol，是一个开源的协议标准。</p> <h2 id="为什么需要-mcp-">为什么需要 MCP ？</h2> <p>为了整个 AI 行业的生态发展，作为一种标准出现是必然需求，解决了三个关键问题：</p> <ol> <li>数据孤岛：让 AI 可以链接万物</li> <li>开发低效：解决为每个 LLM 写 Function Call 的问题，一次编写所有大模型可用</li> <li>生态碎片化：作为一种标准让不同厂商可以即插即用</li> <li>支持复杂工作流与状态管理：Function Calling 难以维护多轮对话的中间状态（eg：用户查询航班后需手动传递航班号预定）</li> </ol> <table> <thead> <tr> <th>维度</th> <th>传统模式</th> <th>MCP 模式</th> <th>变革价值</th> </tr> </thead> <tbody> <tr> <td>集成成本</td> <td>每次对接新工具需定制开发</td> <td>一次开发，全网复用</td> <td>开发效率提升 10倍</td> </tr> <tr> <td>功能范围</td> <td>单一工具调用</td> <td>多工具协同执行复杂任务链</td> <td>AI 从”助手”升级为”执行者”</td> </tr> <tr> <td>生态开放性</td> <td>封闭式 API 被厂商卡</td> <td>开源协议，社区共建工具库</td> <td>催生 “AI 应用商店” 模式</td> </tr> <tr> <td>安全可控性</td> <td>API 密钥暴露风险</td> <td>数据不离域，权限分级管控</td> <td>满足企业级合规需求</td> </tr> </tbody> </table> <h2 id="mcp-架构和执行流程">MCP 架构和执行流程？</h2> <p>架构分为以下 3 部分：</p> <ul> <li>客户端：大模型应用（DeepSeek、ChatGPT）发起请求</li> <li>服务器：中间层，连接具体工具（数据库、设计软件）</li> <li>资源：具体的数据或工具（Excel文件、网页 API）</li> </ul> <p>运行流程：</p> <ol> <li> <p>初始化与工具列表获取：</p> <ul> <li>用户首先启动 MCPClient，完成初始化操作。</li> <li>MCPClient 向 MCPServer 发送 GET /tools/list 请求，获取可用工具的元数据。</li> <li>MCPServer 返回包含工具名称、功能描述、参数要求等信息的 工具列表JSON，供客户端后续构建提示词使用。</li> </ul> </li> <li> <p>用户输入与提示词构建：</p> <ul> <li>用户通过 MCPClient 输入自然语言请求（如“查询服务器状态”“生成文件报告”等）。</li> <li>MCPClient 将用户请求与初始化阶段获取的 工具列表 结合，生成包含任务目标和工具能力的提示词（Prompt），传递给 LLMService（大语言模型服务层）。</li> </ul> </li> <li> <p>工具传递方式选择（二选一）：</p> <ul> <li>使用 Function Call（函数调用）直接携带工具列表信息。LLMService 通过 LLM_API 调用大语言模型时，在请求中直接携带 工具schema（结构化工具定义，如参数格式、调用格式），告知模型可用工具的调用方式。</li> <li>在系统提示词（System Prompt）中包含工具列表。LLMService 将工具列表以自然语言描述形式嵌入 系统提示词（System Prompt），让模型在理解用户需求时知晓可用工具的功能边界。</li> </ul> </li> <li> <p>LLM判断与响应：</p> <ul> <li>无需工具：LLM直接将处理结果通过 MCP Client 回复给用户；</li> <li>需要工具： <ol> <li>获取命令模板： MCP Client 根据模型指定的工具名称，在初始化时保存的工具配置中取出对应的 命令模板（如Shell命令格式、API调用参数模板）。</li> <li>生成与执行命令： MCP Client 将用户输入参数与命令模板结合，通过 ToolService（工具执行服务）生成完整可执行命令，并提交给 本地系统 执行。</li> <li>结果处理：本地系统 返回原始执行结果（如命令输出文本、API返回数据），ToolService 将其转换为结构化结果（JSON），反馈给 MCP Client。</li> <li>二次调用模型生成最终回复：MCPClient 将结构化结果与用户原始问题一并提交给 LLMService，通过 LLM_API 调用模型，将技术化的执行结果转化为自然语言描述（如将“服务器CPU使用率80%”转化为“当前服务器CPU负载较高，建议检查进程”）。</li> </ol> </li> </ul> </li> <li> <p>工具命令生成与执行： 若需要工具， MCP Client 根据 LLM 提供的参数格式，以及 MCP Server 配置的命令模板进行拼接，生成完整的可执行命令，并在本地环境（Local_Env）中执行该命令。</p> </li> <li> <p>结果处理与输出： 本地环境执行命令后，将结果返回给 MCP Client。MCP Client 将执行结果提交给 LLM，由 LLM 对技术化的执行结果进行处理，最终以人性化的语言形式输出给用户。</p> </li> </ol> <p><img src="/assets/img/posts/202507141134463.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"></p> <h2 id="什么是-mcp-client-">什么是 MCP Client ？</h2> <p>一个 LLM 的遥控器，负责向 Server 发送指令并接受结果。充当翻译官的角色，把自然语言指令转换成 Server 能理解的请求格式。 它主要做三件事：</p> <ol> <li>构建请求：根据用户输入或 LLM 的需求构建出符合 MCP 协议的消息</li> <li>与 Server 通信：与 Server 建立连接并发送请求</li> <li>接受到 Server 返回的结果后解读这些信息并反馈给用户或者 LLM</li> </ol> <p><img src="/assets/img/posts/202507141118712.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"></p> <h2 id="什么是-mcp-server-">什么是 MCP Server ？</h2> <p>一个工具箱，里面装满了各种工具（如爬虫、文件读写、数据库查询），但它不会主动使用这些工具，它允许大语言模型以一种标准化的方式调用。 它主要做三件事：</p> <ol> <li>提供工具：核心价值</li> <li>处理请求：收到 client 的请求后负责解析并根据请求内容执行相应的操作</li> <li>返回结果：完成操作后把结果返回给 client</li> </ol> <h2 id="什么是-mcp-host-">什么是 MCP Host ？</h2> <p>承载 MCP Server 的底层基础设施，负责提供协议运行所需的计算、存储与安全环境。一个 Host 托管多个 Server 实现资源隔离与多租户支持。 它使 Server 能专注业务逻辑，而无需关心底层运维复杂性，Host 层的设计质量直接决定整个系统的稳定性上限。 它主要做五件事：</p> <ol> <li>资源供给与隔离：为每个 MCP Server 实例分配独立资源</li> <li>生命周期管理：启动、停止、热更新</li> <li>网络与安全沙箱： <ul> <li>防火墙规则（限制 Server 的出口 IP）</li> <li>TLS 终端卸载（由 Host 统一处理加密）</li> <li>防止 Server 逃逸攻击（如 gVisor 容器隔离） <pre><code class="language-mermaid">graph LR
+Client --&gt;|HTTPS| Host
+Host --&gt;|解密 &amp; 协议检查| Server
+Server --&gt;|内部通信| Tool[业务工具]
+</code></pre> </li> </ul> </li> <li>监控与自愈： <ul> <li>监控CPU/内存利用率（阈值超限自动扩容）</li> <li>监控QPS/延迟（异常流量自动熔断）</li> <li>Server 崩溃时自动重启</li> <li>检测到内存泄漏时重建实例</li> </ul> </li> <li>跨 Server 协调：全局配额控制、跨工具事务、工具依赖管理都在 Host 层协调实现</li> <li>混合云桥接：统一管理部署在公有云 + 私有云 + 边缘端的 MCP Server</li> </ol> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MCP Client → 调用服务（如 Agent 请求天气接口）
+       ↓
+MCP Server → 处理协议（路由到天气API + 管理会话）
+       ↓
+MCP Host  → 提供资源（CPU/内存/网络隔离）
+       ↓
+External Tools → 实际执行（天气API）
+</code></pre></div></div> <h2 id="基于-ai-编写-mcp-server">基于 AI 编写 MCP Server</h2> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>### 需求
+
+基于提供的 MCP 相关资料，帮我构建一个 MCP Server，需求如下：
+
+- 提供一个获取当前时间的工具
+- 接收时区作为参数（可选）
+- 编写清晰的注释和说明
+- 要求功能简洁、只包含关键功能
+- 使用 TypeScript 编写
+
+请参考下面四个资料：
+
+### [参考资料 1] MCP 基础介绍
+
+- 粘贴 https://modelcontextprotocol.io/introduction 里的内容。
+
+### [参考资料 2] MCP 核心架构
+
+- 粘贴 https://modelcontextprotocol.io/docs/concepts/architecture 里的内容。
+
+### [参考资料 3] MCP Server 开发指引
+
+- 粘贴 https://modelcontextprotocol.io/quickstart/server 里的内容。
+
+### [参考资料 4] MCP Typescript SDK 文档
+
+- 粘贴 https://github.com/modelcontextprotocol/typescript-sdk/blob/main/README.md 里的内容。
+</code></pre></div></div> <h2 id="通讯协议-stdio标准输入输出和-sse服务器推送事件有什么区别">通讯协议 STDIO（标准输入输出）和 SSE（服务器推送事件）有什么区别？</h2> <ul> <li> <p>STDIO 协议是「面对面对话」把 MCP Server 也就是这个 Python 程序下载到本机并且本机运行，AI 客户端与 MCP Server 使用 STDIO 也就是操作系统的标准输入输出通道进行交互，无需网络连接。AI 客户端与 MCP Server 的距离更近一些。</p> </li> <li> <p>SSE 协议是「电话热线」把 MCP Server 也就是这个 Python 程序单独部署，AI 客户端与 MCP Server 使用 SSE 协议进行远程调用。AI 客户端与 MCP Server 的距离更远一些。</p> </li> </ul> <h2 id="function-calling-和-mcp-server-和-agent-和-workflow-有什么区别">Function Calling 和 MCP Server 和 Agent 和 Workflow 有什么区别？</h2> <table> <thead> <tr> <th>维度</th> <th>Function Calling</th> <th>MCP Server</th> <th>Agent</th> <th>Workflow</th> </tr> </thead> <tbody> <tr> <td>本质定位</td> <td>模型内置的轻量级工具调用接口（内部触发）</td> <td>标准化的外部工具通信协议层（双向通信）</td> <td>自主决策的任务执行实体（规划+工具调度）</td> <td>任务编排引擎（多节点调度与状态管理）</td> </tr> <tr> <td>协议性质</td> <td>厂商私有（如OpenAI/Anthropic自定义格式）</td> <td>开放标准（JSON-RPC 2.0等）</td> <td>无固定协议（可集成FC/MCP/自定义逻辑）</td> <td>依赖 DSL/YAML （Prefect/Airflow）</td> </tr> <tr> <td>架构设计</td> <td>集成于模型内部，直接生成函数调用指令</td> <td>分层架构（客户端-服务端解耦）</td> <td>多模块协同（规划器+工具库+记忆模块）</td> <td>有向无环图（DAG）驱动节点依赖</td> </tr> <tr> <td>上下文管理</td> <td>需开发者手动维护多轮对话状态</td> <td>原生支持跨轮次参数传递与状态存储</td> <td>主动维护任务链状态（自动记忆/回溯关键信息）</td> <td>全局状态跟踪（节点间数据持久化）</td> </tr> <tr> <td>安全机制</td> <td>依赖业务层实现权限控制</td> <td>内置会话加密、权限分级等企业级安全管控</td> <td>沙箱隔离+运行时监控（防越权/死循环）</td> <td>权限分级+审计日志</td> </tr> <tr> <td>使用场景</td> <td>简单同步任务（天气查询、计算器、知识库问答）</td> <td>复杂异步工作流（跨系统数据聚合、多步骤决策）</td> <td>长周期目标导向任务（旅行规划）</td> <td>流程化作业（订单处理/报告生成）</td> </tr> </tbody> </table> <p>四者关系本质是：<br> 能力（FC）→ 连接（MCP）→ 思考（Agent）→ 行动（Workflow）</p> <pre><code class="language-mermaid">graph LR
+  A[用户请求] --&gt; B(Workflow引擎)
+  B --&gt; C{任务类型}
+  C --&gt;|简单反射| D[Function Calling]
+  C --&gt;|复杂工具| E[MCP Server]
+  C --&gt;|决策任务| F[Agent]
+  F --&gt;|调用| D &amp; E
+  D --&gt; G[本地函数]
+  E --&gt; H[外部工具]
+  F --&gt; I[记忆库]
+  B --&gt; J[输出结果]
+</code></pre> <p>Function Calling = 神经末梢反射 → 特性：快速、无意识、局部的</p> <p>MCP Server = 工具握柄 → 特性：标准化、安全、可扩展的</p> <p>Agent = 大脑 → 特性：决策、规划、自主的</p> <p>Workflow = 神经中枢 → 特性：编排、状态化、流程驱动的</p> <h2 id="决策树">决策树</h2> <pre><code class="language-mermaid">graph TD
+    A{任务类型} --&gt;|简单同步| B[Function Calling]
+    A --&gt;|多工具调用| C[MCP Server]
+    A --&gt;|多步骤决策| D[Agent]
+    A --&gt;|流程自动化| E[Workflow]
+    D --&gt; F{需固定流程?}
+    F --&gt;|是| G[Workflow + Agent]
+    F --&gt;|否| H[独立Agent + MCP]
+    C --&gt; I{工具是否异构?}
+    I --&gt;|是| J[MCP + 开放协议]
+    I --&gt;|否| K[FC + 私有协议]
+</code></pre> <h3 id="一个对比-iphone-15-在京东和天猫的月销量并分析价格趋势的需求分析实例">一个「对比 iPhone 15 在京东和天猫的月销量，并分析价格趋势」的需求分析实例：</h3> <p>技术分工：</p> <table> <thead> <tr> <th>组件</th> <th>职责</th> </tr> </thead> <tbody> <tr> <td>Workflow</td> <td>编排流程：竞品抓取 → 数据清洗 → 趋势分析 → 报告生成</td> </tr> <tr> <td>Agent 群</td> <td>- 抓取Agent：控制爬虫 <br> - 清洗Agent：过滤无效数据 <br> - 分析Agent：调用统计模型</td> </tr> <tr> <td>MCP</td> <td>封装：<br> - 京东数据API → jd.get_product_sales(item_id) <br> - 天猫数据API → tmall.query_sales(item_id)</td> </tr> </tbody> </table> <p>执行流程如图：</p> <pre><code class="language-mermaid">sequenceDiagram
+  Workflow-&gt;&gt;抓取Agent: 启动京东数据抓取
+  抓取Agent-&gt;&gt;MCP: 调用 jd.get_product_sales("iPhone15")
+  MCP--&gt;&gt;抓取Agent: 返回JSON{ sales: 12000, price: 5999 }
+  抓取Agent-&gt;&gt;Workflow: 提交数据
+  Workflow-&gt;&gt;清洗Agent: 清洗天猫数据
+  清洗Agent-&gt;&gt;MCP: 调用 tmall.query_sales("iPhone15")
+  MCP--&gt;&gt;清洗Agent: 返回JSON{ sales: 15000, price: 5899 }
+  清洗Agent-&gt;&gt;分析Agent: 传递清洗后数据
+  分析Agent-&gt;&gt;Workflow: 生成趋势报告
+</code></pre> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
+      let giscusTheme = determineComputedTheme();
+      let giscusAttributes = {
+        src: 'https://giscus.app/client.js',
+        'data-repo': 'XuYuanzhe/XuYuanzhe.github.io',
+        'data-repo-id': 'R_kgDOPSYiIg',
+        'data-category': 'Announcements',
+        'data-category-id': 'DIC_kwDOPSYiIs4CtexH',
+        'data-mapping': 'title',
+        'data-strict': '1',
+        'data-reactions-enabled': '1',
+        'data-emit-metadata': '0',
+        'data-input-position': 'bottom',
+        'data-theme': giscusTheme,
+        'data-lang': 'zh-CN',
+        crossorigin: 'anonymous',
+        async: '',
+      };
+
+      let giscusScript = document.createElement('script');
+      Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
+      document.getElementById('giscus_thread').appendChild(giscusScript);
+    </script> <noscript>Please enable JavaScript to view the <a href="http://giscus.app/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by giscus.</a> </noscript> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Xu Yuanzhe. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js" integrity="sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js" integrity="sha256-1rA678n2xEx7x4cTZ5x4wpUCj6kUMZEZ5cxLSVSFWxw=" crossorigin="anonymous"></script> <script defer src="/assets/js/mermaid-setup.js?38ca0a0126f7328d2d9a46bad640931f" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>
