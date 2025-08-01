@@ -2,9 +2,9 @@
 layout: post
 title: Git工作流规范
 date: 2022-07-08 15:00:00
-tags: Git
+tags: Git 教学
 categories: 技术
-giscus_comments: true # 支持评论
+giscus_comments: true
 ---
 
 ## 文件状态

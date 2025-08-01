@@ -5,6 +5,7 @@ date: 2025-07-28 15:00:00
 tags: AI MCP
 categories: 技术
 giscus_comments: true
+pretty_table: true
 ---
 
 MCP 是 AI 应用与能力（tools、prompts、resources）之间的通用连接器，类似于 USB-C 为电子设备之间的连接提供了标准化接口。
