@@ -166,6 +166,17 @@ ninja.data = [{
             window.location.href = "/blog/2023/grep/";
           
         },
+      },{id: "post-python-基础",
+        
+          title: "python 基础",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/python/";
+          
+        },
       },{id: "post-我的笔记",
         
           title: "我的笔记",
@@ -175,6 +186,17 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2023/my-notes/";
+          
+        },
+      },{id: "post-linux-命令手册",
+        
+          title: "Linux 命令手册",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2023/linux/";
           
         },
       },{id: "post-git工作流规范",
