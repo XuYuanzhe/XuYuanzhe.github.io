@@ -87,7 +87,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: 许元喆的个人博客 # blog_name will be displayed in your blog page
-blog_description: 技术 & 杂谈 & 玄学 & EDC
+blog_description: 技术 & 杂谈 & 玄学 & 随笔
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -261,7 +261,7 @@ jekyll-archives:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
 display_tags: ["AI", "Python", "Golang", "网络", "教学"] # 这些标签将显示在您博客的首页上
-display_categories: ["技术", "杂谈", "玄学", "EDC"] # 这些类别将显示在您博客的首页上
+display_categories: ["技术", "杂谈", "玄学", "书"] # 这些类别将显示在您博客的首页上
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
