@@ -210,6 +210,17 @@ ninja.data = [{
             window.location.href = "/blog/2022/solve-problem/";
           
         },
+      },{id: "post-正则表达式",
+        
+          title: "正则表达式",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2022/re/";
+          
+        },
       },{id: "post-dns协议",
         
           title: "DNS协议",
@@ -340,6 +351,39 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2021/cyberpunk2077/";
+          
+        },
+      },{id: "post-我的第一本算法书",
+        
+          title: "我的第一本算法书",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/my_first_algorithm_book.pdf";
+          
+        },
+      },{id: "post-图解网络",
+        
+          title: "图解网络",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/illustrated_network.pdf";
+          
+        },
+      },{id: "post-redis-大全",
+        
+          title: "Redis 大全",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/a_complete_collection_of_redis.pdf";
           
         },
       },{id: "post-包含各种组件的文章示例",
