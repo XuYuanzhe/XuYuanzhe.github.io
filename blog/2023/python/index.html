@@ -175,10 +175,11 @@
 
 <span class="c1"># 判断输出
 </span><span class="n">aa</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">bb</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">cc</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+<span class="n">cc</span> <span class="o">=</span> <span class="p">[</span><span class="n">aa</span><span class="p">]</span>
 <span class="n">aa</span> <span class="o">=</span> <span class="mi">15</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>  <span class="c1"># 输出 [10]，因为 c1 是一个列表，包含了 a1 的初始值 10，而不是 a1 的引用。
+<span class="nf">print</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
+<span class="c1"># 1. 不可变类型（如整数、字符串）的变量重新赋值时，会创建新的内存空间，原引用不会被修改。
+# 2. 列表等容器存储的是元素的引用，而非值本身，因此不会随变量后续的重新赋值而改变。
 </span>
 <span class="c1"># 判断输出
 </span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>

@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-记忆策略与技术实现",
+        },{id: "post-server-sent-events-sse",
+        
+          title: "Server-Sent Events (SSE)",
+        
+        description: "技术解析与实战",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/sse/";
+          
+        },
+      },{id: "post-记忆策略与技术实现",
         
           title: "记忆策略与技术实现",
         
