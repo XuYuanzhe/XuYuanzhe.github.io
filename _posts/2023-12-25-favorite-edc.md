@@ -1,7 +1,7 @@
 ---
 layout: post
 title: EDC 大饱眼福
-date: 2018-12-25 02:46:00
+date: 2023-12-25 02:46:00
 last_updated: 2025-07-30 00:00:00
 description: 玩到最后就是拍照
 tags: TINB
