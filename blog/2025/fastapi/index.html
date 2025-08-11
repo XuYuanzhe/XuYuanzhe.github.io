@@ -1,0 +1,166 @@
+<!DOCTYPE html> <html lang="zh-CN"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> 搭建一个清晰的 FaskAPI 项目骨架 | Xu Yuanzhe </title> <meta name="author" content="Xu Yuanzhe"> <meta name="description" content="从一开始就建立规范、合理的项目结构，是打造高质量、可维护应用程序的关键一步，无论项目大小"> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%8C%9A&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://xuyuanzhe.github.io/blog/2025/fastapi/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Xu</span> Yuanzhe </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">关于我 </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">博客 </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">GitHub仓库 </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">搭建一个清晰的 FaskAPI 项目骨架</h1> <p class="post-meta"> 创建于 2025 年 08 月 02 日 </p> <p class="post-tags"> <a href="/blog/2025"> <i class="fa-solid fa-calendar fa-sm"></i> 2025 </a>   ·   <a href="/blog/tag/python"> <i class="fa-solid fa-hashtag fa-sm"></i> Python</a>   <a href="/blog/tag/fastapi"> <i class="fa-solid fa-hashtag fa-sm"></i> FastAPI</a>   ·   <a href="/blog/category/%E6%8A%80%E6%9C%AF"> <i class="fa-solid fa-tag fa-sm"></i> 技术</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>当你的应用逐渐发展壮大，业务逻辑变得愈发复杂，模块间需要更细粒度的解耦与协作时，你可能会发现当前这种结构会略显不足。 此时，我们便会更推荐采用一种更具扩展性的三层架构——路由层（Router）、服务层（Service）和数据仓库层（Repository）：</p> <ul> <li>路由层 (Router)：负责接收HTTP请求，进行初步的参数验证，并协调调用服务层的方法。它专注于API接口的定义和请求-响应的处理，保持轻量。</li> <li>服务层 (Service)：承载核心业务逻辑。它将调用数据仓库层来执行数据库操作，并在此基础上处理复杂的业务规则、数据转换等，保持与HTTP层和数据库层的解耦。</li> <li>数据仓库层 (Repository)：专注于与数据库的交互，封装所有的CRUD（创建、读取、更新、删除）操作，对外提供统一的数据访问接口，使得业务逻辑层无需关心具体的ORM细节，例如本示例中的crud模块就可以演变为repository层的一部分。</li> </ul> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── app/
+│   ├── __init__.py             # 初始化模块
+│   ├── main.py                 # 应用入口文件
+│   ├── core/                   # 核心配置和工具模块
+│   │   ├── __init__.py
+│   │   ├── config.py           # 配置文件，如数据库连接、JWT 密钥等
+│   │   ├── security.py         # 安全相关工具（如密码加密、JWT 生成与验证）
+│   │   └── dependencies.py     # 全局依赖项
+│   ├── models/                 # 数据库模型
+│   │   ├── __init__.py
+│   │   ├── base.py             # 基础模型和数据库连接
+│   │   └── user.py             # 用户模型
+│   ├── schemas/                # 数据验证和序列化
+│   │   ├── __init__.py
+│   │   ├── user.py             # 用户相关 Pydantic 模型
+│   ├── crud/                   # 数据库操作（CRUD）
+│   │   ├── __init__.py
+│   │   └── user.py             # 用户相关 CRUD 操作
+│   ├── api/                    # API 路由
+│   │   ├── __init__.py
+│   │   ├── deps.py             # API 路由依赖项
+│   │   ├── user.py             # 用户相关路由
+│   │   └── auth.py             # 身份验证路由
+│   ├── tests/                  # 测试用例
+│   │   ├── __init__.py
+│   │   ├── test_auth.py        # 身份验证相关测试
+│   │   └── test_user.py        # 用户相关测试
+├── .env                        # 环境变量
+├── requirements.txt            # 项目依赖
+└── alembic/                    # 数据库迁移（可选）
+    ├── env.py
+    └── versions/
+</code></pre></div></div> <h2 id="mainpy">main.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+<span class="kn">from</span> <span class="n">app.api</span> <span class="kn">import</span> <span class="n">auth</span><span class="p">,</span> <span class="n">user</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="nc">FastAPI</span><span class="p">()</span>
+
+<span class="c1"># 注册路由
+</span><span class="n">app</span><span class="p">.</span><span class="nf">include_router</span><span class="p">(</span><span class="n">auth</span><span class="p">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="sh">"</span><span class="s">/auth</span><span class="sh">"</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">Authentication</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">include_router</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="sh">"</span><span class="s">/users</span><span class="sh">"</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">Users</span><span class="sh">"</span><span class="p">])</span>
+</code></pre></div></div> <h2 id="coreconfigpy">core/config.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pydantic_settings</span> <span class="kn">import</span> <span class="n">BaseSettings</span>
+
+<span class="k">class</span> <span class="nc">Settings</span><span class="p">(</span><span class="n">BaseSettings</span><span class="p">):</span>
+    <span class="n">JWT_SECRET</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">"</span><span class="s">your_jwt_secret</span><span class="sh">"</span>
+    <span class="n">JWT_ALGORITHM</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">"</span><span class="s">HS256</span><span class="sh">"</span>
+    <span class="n">DATABASE_URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sh">"</span><span class="s">sqlite+aiosqlite:///./test.db</span><span class="sh">"</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">env_file</span> <span class="o">=</span> <span class="sh">"</span><span class="s">.env</span><span class="sh">"</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="nc">Settings</span><span class="p">()</span>
+</code></pre></div></div> <h2 id="coresecuritypy">core/security.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">passlib.context</span> <span class="kn">import</span> <span class="n">CryptContext</span>
+<span class="kn">from</span> <span class="n">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
+<span class="kn">from</span> <span class="n">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="n">app.core.config</span> <span class="kn">import</span> <span class="n">settings</span>
+
+<span class="n">pwd_context</span> <span class="o">=</span> <span class="nc">CryptContext</span><span class="p">(</span><span class="n">schemes</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">bcrypt</span><span class="sh">"</span><span class="p">],</span> <span class="n">deprecated</span><span class="o">=</span><span class="sh">"</span><span class="s">auto</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">hash_password</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">pwd_context</span><span class="p">.</span><span class="nf">hash</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">verify_password</span><span class="p">(</span><span class="n">plain_password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hashed_password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">pwd_context</span><span class="p">.</span><span class="nf">verify</span><span class="p">(</span><span class="n">plain_password</span><span class="p">,</span> <span class="n">hashed_password</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_access_token</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">expires_delta</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="nf">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">30</span><span class="p">)):</span>
+    <span class="n">to_encode</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>
+    <span class="n">expire</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">expires_delta</span>
+    <span class="n">to_encode</span><span class="p">.</span><span class="nf">update</span><span class="p">({</span><span class="sh">"</span><span class="s">exp</span><span class="sh">"</span><span class="p">:</span> <span class="n">expire</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">jwt</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">to_encode</span><span class="p">,</span> <span class="n">settings</span><span class="p">.</span><span class="n">JWT_SECRET</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">JWT_ALGORITHM</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="modelsbasepy">models/base.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sqlalchemy.ext.asyncio</span> <span class="kn">import</span> <span class="n">AsyncSession</span><span class="p">,</span> <span class="n">create_async_engine</span>
+<span class="kn">from</span> <span class="n">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span><span class="p">,</span> <span class="n">DeclarativeBase</span>
+<span class="kn">from</span> <span class="n">app.core.config</span> <span class="kn">import</span> <span class="n">settings</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="nf">create_async_engine</span><span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">DATABASE_URL</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">async_session</span> <span class="o">=</span> <span class="nf">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="n">AsyncSession</span><span class="p">,</span> <span class="n">expire_on_commit</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div></div> <h1 id="modelsuserpy">models/user.py</h1> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Boolean</span>
+<span class="kn">from</span> <span class="n">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span><span class="p">,</span> <span class="n">mapped_column</span>
+<span class="kn">from</span> <span class="n">app.models.base</span> <span class="kn">import</span> <span class="n">Base</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="sh">"</span><span class="s">users</span><span class="sh">"</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nf">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">email</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nf">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">hashed_password</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nf">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">is_active</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="nf">mapped_column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="schemasuserpy">schemas/user.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">EmailStr</span>
+
+<span class="k">class</span> <span class="nc">UserCreate</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">email</span><span class="p">:</span> <span class="n">EmailStr</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">UserResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">email</span><span class="p">:</span> <span class="n">EmailStr</span>
+    <span class="n">is_active</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="nc">ConfigDict</span><span class="p">(</span><span class="n">from_attributes</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div> <h2 id="cruduserpy">crud/user.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sqlalchemy.ext.asyncio</span> <span class="kn">import</span> <span class="n">AsyncSession</span>
+<span class="kn">from</span> <span class="n">sqlalchemy.future</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="kn">from</span> <span class="n">app.models.user</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="n">app.schemas.user</span> <span class="kn">import</span> <span class="n">UserCreate</span>
+<span class="kn">from</span> <span class="n">app.core.security</span> <span class="kn">import</span> <span class="n">hash_password</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_user_by_email</span><span class="p">(</span><span class="n">db</span><span class="p">:</span> <span class="n">AsyncSession</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span> <span class="o">|</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="nf">select</span><span class="p">(</span><span class="n">User</span><span class="p">).</span><span class="nf">filter</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="n">email</span> <span class="o">==</span> <span class="n">email</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">.</span><span class="nf">scalars</span><span class="p">().</span><span class="nf">first</span><span class="p">()</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">db</span><span class="p">:</span> <span class="n">AsyncSession</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span> <span class="n">UserCreate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+    <span class="n">db_user</span> <span class="o">=</span> <span class="nc">User</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">user</span><span class="p">.</span><span class="n">email</span><span class="p">,</span> <span class="n">hashed_password</span><span class="o">=</span><span class="nf">hash_password</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">password</span><span class="p">))</span>
+    <span class="n">db</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">db_user</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">db</span><span class="p">.</span><span class="nf">commit</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">db</span><span class="p">.</span><span class="nf">refresh</span><span class="p">(</span><span class="n">db_user</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">db_user</span>
+</code></pre></div></div> <h2 id="apiauthpy">api/auth.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">fastapi</span> <span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Depends</span><span class="p">,</span> <span class="n">HTTPException</span>
+<span class="kn">from</span> <span class="n">sqlalchemy.ext.asyncio</span> <span class="kn">import</span> <span class="n">AsyncSession</span>
+<span class="kn">from</span> <span class="n">app.schemas.user</span> <span class="kn">import</span> <span class="n">UserCreate</span>
+<span class="kn">from</span> <span class="n">app.core.security</span> <span class="kn">import</span> <span class="n">verify_password</span><span class="p">,</span> <span class="n">create_access_token</span>
+<span class="kn">from</span> <span class="n">app.crud.user</span> <span class="kn">import</span> <span class="n">get_user_by_email</span>
+<span class="kn">from</span> <span class="n">app.core.dependencies</span> <span class="kn">import</span> <span class="n">get_db</span>
+
+<span class="n">router</span> <span class="o">=</span> <span class="nc">APIRouter</span><span class="p">()</span>
+
+<span class="nd">@router.post</span><span class="p">(</span><span class="sh">"</span><span class="s">/login</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">db</span><span class="p">:</span> <span class="n">AsyncSession</span> <span class="o">=</span> <span class="nc">Depends</span><span class="p">(</span><span class="n">get_db</span><span class="p">)):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">get_user_by_email</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nf">verify_password</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">hashed_password</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="nc">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="sh">"</span><span class="s">Invalid credentials</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="nf">create_access_token</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="sh">"</span><span class="s">sub</span><span class="sh">"</span><span class="p">:</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span><span class="p">})</span>
+    <span class="k">return</span> <span class="p">{</span><span class="sh">"</span><span class="s">access_token</span><span class="sh">"</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span> <span class="sh">"</span><span class="s">token_type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">bearer</span><span class="sh">"</span><span class="p">}</span>
+</code></pre></div></div> <h2 id="coredependenciespy">core/dependencies.py</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">app.models.base</span> <span class="kn">import</span> <span class="n">async_session</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_db</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="nf">async_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">session</span>
+</code></pre></div></div> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
+      let giscusTheme = determineComputedTheme();
+      let giscusAttributes = {
+        src: 'https://giscus.app/client.js',
+        'data-repo': 'XuYuanzhe/XuYuanzhe.github.io',
+        'data-repo-id': 'R_kgDOPSYiIg',
+        'data-category': 'Announcements',
+        'data-category-id': 'DIC_kwDOPSYiIs4CtexH',
+        'data-mapping': 'title',
+        'data-strict': '1',
+        'data-reactions-enabled': '1',
+        'data-emit-metadata': '0',
+        'data-input-position': 'bottom',
+        'data-theme': giscusTheme,
+        'data-lang': 'zh-CN',
+        crossorigin: 'anonymous',
+        async: '',
+      };
+
+      let giscusScript = document.createElement('script');
+      Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
+      document.getElementById('giscus_thread').appendChild(giscusScript);
+    </script> <noscript>Please enable JavaScript to view the <a href="http://giscus.app/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by giscus.</a> </noscript> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Xu Yuanzhe. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

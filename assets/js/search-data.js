@@ -23,7 +23,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-server-sent-events-sse",
+        },{id: "post-python-uv-包的应用",
+        
+          title: "python uv 包的应用",
+        
+        description: "淘汰 pip",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/uv/";
+          
+        },
+      },{id: "post-搭建一个清晰的-faskapi-项目骨架",
+        
+          title: "搭建一个清晰的 FaskAPI 项目骨架",
+        
+        description: "从一开始就建立规范、合理的项目结构，是打造高质量、可维护应用程序的关键一步，无论项目大小",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/fastapi/";
+          
+        },
+      },{id: "post-server-sent-events-sse",
         
           title: "Server-Sent Events (SSE)",
         
