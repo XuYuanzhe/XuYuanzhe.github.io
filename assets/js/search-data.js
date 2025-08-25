@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-python-uv-包的应用",
+        },{id: "post-init-py",
+        
+          title: "__init__.py",
+        
+        description: "一个容易被忽略的文件",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/init/";
+          
+        },
+      },{id: "post-python-uv-包的应用",
         
           title: "python uv 包的应用",
         
