@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-init-py",
+        },{id: "post-yml-amp-yaml",
+        
+          title: "yml &amp; yaml ?",
+        
+        description: "傻傻分不清楚",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/yaml/";
+          
+        },
+      },{id: "post-init-py",
         
           title: "__init__.py",
         
