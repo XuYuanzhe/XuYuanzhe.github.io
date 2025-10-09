@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-yml-amp-yaml",
+        },{id: "post-python-进阶之布尔值",
+        
+          title: "Python 进阶之布尔值",
+        
+        description: "bool",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/bool/";
+          
+        },
+      },{id: "post-yml-amp-yaml",
         
           title: "yml &amp; yaml ?",
         
@@ -34,9 +45,9 @@ ninja.data = [{
             window.location.href = "/blog/2025/yaml/";
           
         },
-      },{id: "post-init-py",
+      },{id: "post-python-进阶之-init-py",
         
-          title: "__init__.py",
+          title: "Python 进阶之 __init__.py",
         
         description: "一个容易被忽略的文件",
         section: "Posts",
