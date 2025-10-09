@@ -45,6 +45,17 @@ ninja.data = [{
             window.location.href = "/blog/2025/yaml/";
           
         },
+      },{id: "post-python-进阶之字典的-missing",
+        
+          title: "Python 进阶之字典的 __missing__",
+        
+        description: "深入了解 Python 字典的 __missing__ 方法",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/dict/";
+          
+        },
       },{id: "post-python-进阶之-init-py",
         
           title: "Python 进阶之 __init__.py",
@@ -58,7 +69,7 @@ ninja.data = [{
         },
       },{id: "post-python-uv-包的应用",
         
-          title: "python uv 包的应用",
+          title: "Python uv 包的应用",
         
         description: "淘汰 pip",
         section: "Posts",
@@ -67,9 +78,9 @@ ninja.data = [{
             window.location.href = "/blog/2025/uv/";
           
         },
-      },{id: "post-搭建一个清晰的-faskapi-项目骨架",
+      },{id: "post-搭建一个清晰的-fastapi-项目骨架",
         
-          title: "搭建一个清晰的 FaskAPI 项目骨架",
+          title: "搭建一个清晰的 FastAPI 项目骨架",
         
         description: "从一开始就建立规范、合理的项目结构，是打造高质量、可维护应用程序的关键一步，无论项目大小",
         section: "Posts",
