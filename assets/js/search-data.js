@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-python-进阶之布尔值",
+        },{id: "post-python-进阶之字典的-missing",
+        
+          title: "Python 进阶之字典的 __missing__",
+        
+        description: "深入了解 Python 字典的 __missing__ 方法",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/dict/";
+          
+        },
+      },{id: "post-python-进阶之布尔值",
         
           title: "Python 进阶之布尔值",
         
@@ -43,17 +54,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2025/yaml/";
-          
-        },
-      },{id: "post-python-进阶之字典的-missing",
-        
-          title: "Python 进阶之字典的 __missing__",
-        
-        description: "深入了解 Python 字典的 __missing__ 方法",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/dict/";
           
         },
       },{id: "post-python-进阶之-init-py",
