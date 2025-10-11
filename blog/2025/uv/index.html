@@ -92,7 +92,7 @@ uv lock <span class="nt">--check</span>
 
 <span class="c"># 强制重新解析</span>
 uv lock <span class="nt">--upgrade</span>
-</code></pre></div></div> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
+</code></pre></div></div> <h2 id="pycharm-中的配置">Pycharm 中的配置</h2> <p>使用 Pycharm 配置 uv 解释器，jetbrains 提供了官方文档：https://www.jetbrains.com/zh-cn/help/pycharm/uv.html</p> <p>但看下来感觉说的并不是很清楚，下面的 Uv env use 依然不知道填什么</p> <p><img src="/assets/img/posts/202507251102554.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"></p> <p>研究后只要执行 <code class="language-plaintext highlighter-rouge">uv run python -c "import sys; print(sys.executable)"</code> 代码填入即可</p> </div> </article> <div id="giscus_thread" style="max-width: 930px; margin: 0 auto;"> <br> <script>
       let giscusTheme = determineComputedTheme();
       let giscusAttributes = {
         src: 'https://giscus.app/client.js',

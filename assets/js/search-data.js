@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-python-进阶之字典的-missing",
+        },{id: "post-为什么现在的成年人都没有大人的感觉",
+        
+          title: "为什么现在的成年人都没有大人的感觉？",
+        
+        description: "回答来自知乎",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/grown-up/";
+          
+        },
+      },{id: "post-python-进阶之字典的-missing",
         
           title: "Python 进阶之字典的 __missing__",
         
