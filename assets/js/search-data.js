@@ -23,7 +23,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-为什么现在的成年人都没有大人的感觉",
+        },{id: "post-多智能体",
+        
+          title: "多智能体",
+        
+        description: "LangGraph 学习",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/langgraph/";
+          
+        },
+      },{id: "post-多智能体",
+        
+          title: "多智能体",
+        
+        description: "初识多智能体",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/multi-agent/";
+          
+        },
+      },{id: "post-为什么现在的成年人都没有大人的感觉",
         
           title: "为什么现在的成年人都没有大人的感觉？",
         
