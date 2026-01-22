@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-多智能体",
+        },{id: "post-pyarmor-包",
+        
+          title: "Pyarmor 包",
+        
+        description: "Python 混淆技术",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/code-confusion/";
+          
+        },
+      },{id: "post-多智能体",
         
           title: "多智能体",
         
