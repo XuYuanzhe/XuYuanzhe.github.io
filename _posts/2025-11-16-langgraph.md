@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 多智能体
+title: LangGraph 学习
 date: 2025-11-16 15:00:00
-description: LangGraph 学习
+description: 多智能体
 tags: AI
 categories: 技术
 giscus_comments: true

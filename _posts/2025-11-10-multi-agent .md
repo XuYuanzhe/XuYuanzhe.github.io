@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 多智能体
+title: 初识多智能体
 date: 2025-11-10 15:00:00
-description: 初识多智能体
+description: 多智能体
 tags: AI
 categories: 技术
 giscus_comments: true
