@@ -34,22 +34,22 @@ ninja.data = [{
             window.location.href = "/blog/2026/code-confusion/";
           
         },
-      },{id: "post-多智能体",
+      },{id: "post-langgraph-学习",
         
-          title: "多智能体",
+          title: "LangGraph 学习",
         
-        description: "LangGraph 学习",
+        description: "多智能体",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2025/langgraph/";
           
         },
-      },{id: "post-多智能体",
+      },{id: "post-初识多智能体",
         
-          title: "多智能体",
+          title: "初识多智能体",
         
-        description: "初识多智能体",
+        description: "多智能体",
         section: "Posts",
         handler: () => {
           
