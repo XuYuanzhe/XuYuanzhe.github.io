@@ -34,6 +34,17 @@ ninja.data = [{
             window.location.href = "/blog/2026/code-confusion/";
           
         },
+      },{id: "post-ai-agent-记忆系统",
+        
+          title: "AI Agent 记忆系统",
+        
+        description: "从短期到长期的技术架构与时间",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/memory/";
+          
+        },
       },{id: "post-langgraph-学习",
         
           title: "LangGraph 学习",
