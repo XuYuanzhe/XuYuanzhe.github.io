@@ -23,7 +23,40 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-pyarmor-包",
+        },{id: "post-openclaw-记忆系统源码拆解-从写入到晋升的全链路",
+        
+          title: "OpenClaw 记忆系统源码拆解：从写入到晋升的全链路",
+        
+        description: "how OpenClaw&#39;s memory pipeline works and where it falls short",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/openclaw-memory-system/";
+          
+        },
+      },{id: "post-从-openclaw-源码看-agent-系统设计的三个维度",
+        
+          title: "从 OpenClaw 源码看 Agent 系统设计的三个维度",
+        
+        description: "what can we learn from OpenClaw&#39;s architecture design",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/openclaw-design-philosophy/";
+          
+        },
+      },{id: "post-关于学习",
+        
+          title: "关于学习",
+        
+        description: "张雪峰很有感染力的一段话",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/college/";
+          
+        },
+      },{id: "post-pyarmor-包",
         
           title: "Pyarmor 包",
         

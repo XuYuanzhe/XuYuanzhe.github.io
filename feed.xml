@@ -1,4 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://xuyuanzhe.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://xuyuanzhe.github.io/" rel="alternate" type="text/html" hreflang="zh-CN"/><updated>2026-03-31T01:17:10+00:00</updated><id>https://xuyuanzhe.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Pyarmor 包</title><link href="https://xuyuanzhe.github.io/blog/2026/code-confusion/" rel="alternate" type="text/html" title="Pyarmor 包"/><published>2026-01-14T15:00:00+00:00</published><updated>2026-01-14T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2026/code-confusion</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2026/code-confusion/"><![CDATA[<h1 id="尝试使用-pyarmor-包混淆-python-服务">尝试使用 pyarmor 包混淆 python 服务</h1> <h2 id="step1-安装">step1 安装</h2> <p>在虚拟环境中使用 pip 下载</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uv pip <span class="nb">install </span>pyarmor
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://xuyuanzhe.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://xuyuanzhe.github.io/" rel="alternate" type="text/html" hreflang="zh-CN"/><updated>2026-04-17T09:49:46+00:00</updated><id>https://xuyuanzhe.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">OpenClaw 记忆系统源码拆解：从写入到晋升的全链路</title><link href="https://xuyuanzhe.github.io/blog/2026/openclaw-memory-system/" rel="alternate" type="text/html" title="OpenClaw 记忆系统源码拆解：从写入到晋升的全链路"/><published>2026-04-15T15:00:00+00:00</published><updated>2026-04-15T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2026/openclaw-memory-system</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2026/openclaw-memory-system/"><![CDATA[<p>接着上一篇对 OpenClaw 整体架构的分析，这次单独拆一下它的记忆系统。</p> <p>上次提到过 OpenClaw 用 <code class="language-plaintext highlighter-rouge">MEMORY.md</code> + <code class="language-plaintext highlighter-rouge">memory/日期.md</code> 做双层记忆管理，但没有深入到实现细节。这次从源码层面把写入、晋升、召回的全链路走一遍，顺便分析一下这套系统的不确定性问题。</p> <h2 id="记忆系统全景">记忆系统全景</h2> <p>OpenClaw 的设计原则是：一切持久状态都是磁盘上的 Markdown 文件。</p> <p>完整的文件体系：</p> <table> <thead> <tr> <th>文件</th> <th>用途</th> <th>加载时机</th> </tr> </thead> <tbody> <tr> <td>AGENTS.md</td> <td>工作区规则、安全边界</td> <td>每次会话（最高优先级）</td> </tr> <tr> <td>SOUL.md</td> <td>Agent 个性、沟通风格</td> <td>每次会话</td> </tr> <tr> <td>USER.md</td> <td>用户档案</td> <td>每次会话</td> </tr> <tr> <td>MEMORY.md</td> <td>长期记忆（已验证事实、决策）</td> <td>仅主会话</td> </tr> <tr> <td>memory/YYYY-MM-DD.md</td> <td>日记忆（当天观察、临时笔记）</td> <td>当天 + 昨天自动加载</td> </tr> <tr> <td>DREAMS.md</td> <td>梦境日记（Dreaming 系统输出）</td> <td>不自动注入</td> </tr> </tbody> </table> <p>其中 <code class="language-plaintext highlighter-rouge">AGENTS.md</code>、<code class="language-plaintext highlighter-rouge">SOUL.md</code>、<code class="language-plaintext highlighter-rouge">USER.md</code> 定义的是身份和规则，每次会话启动时加载。而 <code class="language-plaintext highlighter-rouge">MEMORY.md</code> 和 <code class="language-plaintext highlighter-rouge">memory/YYYY-MM-DD.md</code> 是另一套机制——承载 Agent 在对话中积累的动态记忆，有专门的写入、演进和召回管线。</p> <h2 id="记忆写入两条路径">记忆写入：两条路径</h2> <h3 id="agent-主动写入">Agent 主动写入</h3> <p>最常用的路径。对话过程中，Agent 随时可以调用 <code class="language-plaintext highlighter-rouge">write</code> 工具写入记忆文件：</p> <ul> <li>用户显式要求：”记住我偏好 TypeScript”</li> <li>Agent 自主判断：认为某些信息值得保存，自行决定写入</li> </ul> <p>关键点在于：<strong>是否写入、写入什么、用什么格式，完全由 LLM 自主决定</strong>。没有结构化的提取规则，没有强制的写入模板。</p> <p>AGENTS.md 模板里对写入的指导是这样的：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Write It Down - No "Mental Notes"!
+- Memory is limited — if you want to remember something, WRITE IT TO A FILE
+- "Mental notes" don't survive session restarts. Files do.
+- When someone says "remember this" → update memory/YYYY-MM-DD.md
+</code></pre></div></div> <p>可以看到，这些是方向性的建议（”capture what matters”），而非结构化的提取规则。</p> <h3 id="memory-flush-自动写入">Memory Flush 自动写入</h3> <p>Memory Flush 是上下文压缩（Compaction）前的安全网——确保激进裁剪之前，重要信息已被保存。</p> <p>触发条件：</p> <ul> <li>Token 阈值：<code class="language-plaintext highlighter-rouge">softThresholdTokens</code>（默认 4000）— 距离 Compaction 的 token 距离</li> <li>文件大小阈值：<code class="language-plaintext highlighter-rouge">forceFlushTranscriptBytes</code>（默认 2MB）</li> </ul> <p>触发时，系统向 LLM 发送一段特殊指令：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pre-compaction memory flush turn.
+The session is near auto-compaction; capture durable memories to disk.
+Store durable memories only in memory/YYYY-MM-DD.md.
+Treat MEMORY.md, DREAMS.md, SOUL.md, TOOLS.md, AGENTS.md as read-only during this flush.
+If nothing to store, reply with NO_REPLY.
+</code></pre></div></div> <p>Flush 期间，<code class="language-plaintext highlighter-rouge">write</code> 工具被包装为仅追加模式（<code class="language-plaintext highlighter-rouge">appendOnly</code>），只允许写入当天的日记忆文件。</p> <blockquote> <h5 id="note">Note</h5> <p class="block-tip">两条路径都写入 <code class="language-plaintext highlighter-rouge">memory/YYYY-MM-DD.md</code>。主动写入是日常的主要方式，Memory Flush 是压缩前的”最后一次救济机会”。</p> </blockquote> <h2 id="日记忆到长期记忆的晋升">日记忆到长期记忆的晋升</h2> <h3 id="默认方式agent-自主整理">默认方式：Agent 自主整理</h3> <p>不启用 Dreaming 的情况下，晋升完全靠 Agent 自己判断：</p> <ol> <li>对话中直接写入 <code class="language-plaintext highlighter-rouge">MEMORY.md</code>（AGENTS.md 模板允许：”You can read, edit, and update MEMORY.md freely in main sessions”）</li> <li>心跳（Heartbeat）期间定期回顾日记忆并更新</li> </ol> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Memory Maintenance (During Heartbeats)
+Periodically (every few days), use a heartbeat to:
+1. Read through recent memory/YYYY-MM-DD.md files
+2. Identify significant events, lessons, or insights worth keeping long-term
+3. Update MEMORY.md with distilled learnings
+4. Remove outdated info from MEMORY.md that's no longer relevant
+</code></pre></div></div> <p>特点是灵活但不确定——是否执行、何时执行、整理质量如何，完全取决于 LLM。</p> <h3 id="dreaming-梦境系统三阶段异步演进">Dreaming 梦境系统：三阶段异步演进</h3> <p>这是 OpenClaw 比较有意思的设计。Dreaming 默认禁用（<code class="language-plaintext highlighter-rouge">DEFAULT_MEMORY_DREAMING_ENABLED = false</code>），启用后通过 Cron 定时任务运行（默认凌晨 3 点），将短期信号逐步转化为长期记忆。</p> <p>三个阶段按顺序执行：Light → REM → Deep。</p> <p><strong>浅睡眠（Light Sleep）— 摄取与去重</strong></p> <p>从多个信号源搜集候选记忆片段：</p> <ul> <li>日记忆文件：逐行提取（最小 8 字符，最大 280 字符，最多 4 行合并）</li> <li>会话转录：按 Agent 和 Session 聚合（每次最多 240 条）</li> <li>短期回忆存储：<code class="language-plaintext highlighter-rouge">memory/.dreams/short-term-recall.json</code></li> </ul> <p>去重使用 Jaccard 相似度（阈值 0.9）。这个阶段不调用 LLM，完全是确定性的文本处理。</p> <p><strong>快速眼动睡眠（REM Sleep）— 反射与候选真理</strong></p> <p>对候选信号做模式分析，识别反复出现的主题和高置信度的”候选真理”。</p> <p>主题强度计算：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strength = min(1, (count / totalEntries) × 2)
+</code></pre></div></div> <p>候选真理的置信度分数：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>confidence = avgScore × 0.45
+           + recallStrength × 0.25
+           + consolidation × 0.20
+           + conceptual × 0.10
+
+其中：
+  recallStrength = min(1, log1p(recallCount) / log1p(6))
+  consolidation  = min(1, recallDays.length / 3)
+  conceptual     = min(1, conceptTags.length / 6)
+</code></pre></div></div> <p>去重阈值提高到 Jaccard 0.88，仅保留置信度 &gt;= 0.45 的候选，最多 3 条。</p> <p><strong>深度睡眠（Deep Sleep）— 六维评分与晋升</strong></p> <p>这是决定一条记忆能否晋升为长期记忆的最终关口。六个加权信号：</p> <table> <thead> <tr> <th>信号</th> <th>权重</th> <th>计算方式</th> </tr> </thead> <tbody> <tr> <td>频率</td> <td>0.24</td> <td>min(1, ln(signalCount + 1) / ln(11))</td> </tr> <tr> <td>相关性</td> <td>0.30</td> <td>totalScore / max(1, signalCount)</td> </tr> <tr> <td>多样性</td> <td>0.15</td> <td>min(1, max(uniqueQueries, recallDays) / 5)</td> </tr> <tr> <td>时效性</td> <td>0.15</td> <td>exp(-λ × ageDays)，λ = ln(2)/14，半衰期 14 天</td> </tr> <tr> <td>巩固度</td> <td>0.10</td> <td>基于多日重现或 grounded 信号强度</td> </tr> <tr> <td>概念丰富度</td> <td>0.06</td> <td>min(1, conceptTags.length / 6)</td> </tr> </tbody> </table> <p>巩固度的计算取两个分支的最大值：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 分支 1：基于 recallDays 的时间跨度
+spacing = min(1, ln(recallDays.length - 1) / ln(4))
+span    = min(1, (maxDay - minDay) / 7天)
+consolidation_a = 0.55 × spacing + 0.45 × span
+
+// 分支 2：基于 grounded 信号计数
+consolidation_b = min(1, groundedCount / 3)
+
+consolidation = max(consolidation_a, consolidation_b)
+</code></pre></div></div> <p>Light Sleep 和 REM Sleep 的命中记录还会额外加分：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>phaseBoost = 0.06 × lightStrength × lightRecency
+           + 0.09 × remStrength × remRecency
+// 衰减半衰期同为 14 天
+</code></pre></div></div> <p>最终晋升门控，三个条件必须同时满足：</p> <ul> <li><code class="language-plaintext highlighter-rouge">score &gt;= 0.80</code></li> <li><code class="language-plaintext highlighter-rouge">totalSignalCount &gt;= 3</code>（recallCount + dailyCount + groundedCount）</li> <li><code class="language-plaintext highlighter-rouge">max(uniqueQueries, recallDays.length) &gt;= 3</code></li> </ul> <p>通过门控的候选会被重新水合（从日文件中重新读取，确保不写入过时内容），然后追加到 <code class="language-plaintext highlighter-rouge">MEMORY.md</code>。</p> <h2 id="记忆召回与反馈环">记忆召回与反馈环</h2> <p>持久化的记忆通过 <code class="language-plaintext highlighter-rouge">memory_search</code> 工具被召回：</p> <ul> <li>搜索后端：支持 builtin（SQLite + FTS，可选 sqlite-vec 向量扩展）和 QMD 两种；无 embedding 时自动降级为 FTS 全文索引</li> <li>信号记录：每次搜索返回结果后，后台异步调用 <code class="language-plaintext highlighter-rouge">recordShortTermRecalls</code>，把查询、路径、评分写入 <code class="language-plaintext highlighter-rouge">memory/.dreams/short-term-recall.json</code></li> <li>反馈环（仅 Dreaming 启用时）：召回信号被 Dreaming 消费，影响六维评分中的频率和相关性，形成”越被检索 → 越容易晋升”的正向循环</li> </ul> <h2 id="这套系统的不确定性问题">这套系统的不确定性问题</h2> <p>管线的设计理念是优秀的：异步演进、多阶段过滤、正向反馈。但从工程角度看，有几个不确定性环节值得注意。</p> <p><strong>写入完全依赖 LLM 判断</strong></p> <p>无论主动写入还是 Memory Flush，写什么、怎么写都由 LLM 单次推理决定。不同模型、不同上下文长度、甚至同一模型的不同推理轮次，写入内容可能完全不同。你告诉 Agent 自己的名字、城市和饮食偏好，它可能只记住了名字，漏掉其余两个。</p> <p><strong>Memory Flush 的盲区</strong></p> <p>Flush 只在上下文接近压缩阈值时触发。如果一次对话很短（没触发 Compaction），而 Agent 又没主动写入，对话中的信息就不会被持久化。它只能保证”长对话压缩前不丢”，不能保证”短对话也记住”。</p> <p><strong>晋升的不确定性</strong></p> <p>默认路径下，晋升完全靠 Agent 自主判断，可能长期不回顾。Dreaming 路径虽然有量化的评分机制，但也有三个问题：</p> <ol> <li><strong>Cron 周期延迟</strong>：晋升门控要求信号计数 &gt;= 3 且跨日数 &gt;= 3，一条记忆通常需要多次跨日积累。”我下周二飞杭州”这样的时效性信息，等信号积累完，飞机可能已经起飞了。</li> <li><strong>Jaccard 去重无法捕捉语义</strong>：”用户喜欢苹果”和”用户爱吃苹果”在语义上是同一件事，但 Jaccard 基于词汇重叠，可能判定它们不相似，导致同一事实存在多个版本。</li> <li><strong>统计评分而非语义重要性</strong>：Deep Sleep 评分完全基于统计信号（检索次数、出现天数），没有 LLM 参与语义判断。”我对花生过敏”只被提及一次但极其重要，在评分中可能远低于一条反复出现但不重要的信息。</li> </ol> <p>不确定性的完整链路：</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>对话内容
+  ↓ ❶ LLM 自主判断是否写入（可能遗漏）
+  ↓ ❷ 短对话无 Flush 安全网（可能不触发）
+日记忆文件
+  ↓ ❸ 晋升不确定
+  │   ├─ 默认路径：Agent 自主判断，可能不执行
+  │   └─ Dreaming 路径（默认禁用）：
+  │        Jaccard 机械去重（无语义理解）
+  │        六维统计评分（无语义判断）
+MEMORY.md
+  ↓ ❹ 召回受限（无 embedding 时降级为词法匹配）
+对话上下文
+</code></pre></div></div> <blockquote> <h5 id="note-1">Note</h5> <p class="block-tip">这些不确定性不算设计缺陷——通用框架要在提取精度和系统复杂度之间做权衡。但对于需要精确记住用户事实的场景，从写入到晋升到召回的不确定性叠加起来，确实会影响体验。</p> </blockquote> <h2 id="可以优化的方向">可以优化的方向</h2> <p>分析完这套系统的不确定性，自然会想到一些改进思路：</p> <p><strong>写入环节</strong>：不依赖 Agent 自主判断，改为每轮对话结束时自动触发结构化提取。用 LLM 做结构化输出，强制提取用户偏好、事实、计划等。</p> <p><strong>晋升环节</strong>：不等 Cron 调度，在提取的同时做实时整合。对每条新事实，向量检索已有记忆，用 LLM 判定是 INSERT（新事实）、UPDATE（更丰富）、SKIP（已存在）还是 DELETE（矛盾过时）。</p> <p><strong>去重环节</strong>：用向量相似度 + LLM 语义判断替代 Jaccard 字面匹配。</p> <p><strong>召回环节</strong>：混合召回（向量 + BM25），不依赖单一搜索后端。</p> <p><strong>衰减策略</strong>：区分对待。个人事实（偏好、过敏等）应该是 Evergreen 的，不衰减；时效性事件按策略淘汰。</p> <p>这些方向的核心思路是：把关键决策从”LLM 自由发挥”变成”LLM 在结构化约束下做语义判断”，在灵活性和确定性之间找到更好的平衡点。</p>]]></content><author><name></name></author><category term="技术"/><category term="AI"/><category term="Agent"/><summary type="html"><![CDATA[how OpenClaw's memory pipeline works and where it falls short]]></summary></entry><entry><title type="html">从 OpenClaw 源码看 Agent 系统设计的三个维度</title><link href="https://xuyuanzhe.github.io/blog/2026/openclaw-design-philosophy/" rel="alternate" type="text/html" title="从 OpenClaw 源码看 Agent 系统设计的三个维度"/><published>2026-04-13T15:00:00+00:00</published><updated>2026-04-13T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2026/openclaw-design-philosophy</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2026/openclaw-design-philosophy/"><![CDATA[<p>最近花了一些时间翻阅了 OpenClaw 的源码，记录一下我的思考。</p> <p>我不太关心”养虾”本身有多好玩，更想搞清楚的是：它的 Agent 架构到底做了哪些值得学习的设计？</p> <p>整体看下来，我觉得可以从三个维度去拆解：<strong>Prompt Engineering</strong>、<strong>Context Engineering</strong> 和 <strong>Harness Engineering</strong>。分别对应”如何说”、”让 AI 看什么”、”构建怎样的运行环境”。三者层层递进。</p> <h2 id="prompt-engineering不只是写提示词">Prompt Engineering：不只是写提示词</h2> <p>2023 年大家就在讨论怎么写好提示词了，但到了今天，Prompt Engineering 的内涵已经变了——不再是写一段固定的 System Prompt，而是一套动态的组装机制。</p> <h3 id="模块化的-system-prompt">模块化的 System Prompt</h3> <p>OpenClaw 的 System Prompt 是在运行时拼装出来的。核心函数 <code class="language-plaintext highlighter-rouge">buildAgentSystemPrompt()</code> 接收几十个参数，按固定顺序把各个模块像积木一样拼在一起。</p> <p>大概有 23 个模块，包括：身份标识、工具清单、安全准则、Skills 系统、记忆召回、工作区信息、沙箱配置、运行时信息等等。</p> <p>它还区分了三种模式：</p> <ul> <li><strong>full</strong>：主 Agent 与用户对话时，全量加载</li> <li><strong>minimal</strong>：子 Agent 执行任务，只保留核心模块</li> <li><strong>none</strong>：极简场景，基本只有一行身份标识</li> </ul> <blockquote> <h5 id="tip">TIP</h5> <p class="block-tip">区分模式的原因很简单——上下文窗口是有限的，不同场景下没必要全部加载。这个思路在设计自己的 Agent 系统时也适用。</p> </blockquote> <h3 id="markdown-驱动的配置体系">Markdown 驱动的配置体系</h3> <p>OpenClaw 用一组 <code class="language-plaintext highlighter-rouge">.md</code> 文件来管理 Agent 的”灵魂”和”骨架”，运行时动态注入到 System Prompt。为什么用 Markdown？比纯文本多了格式能力（标题、加粗、斜体），同时又能用 Shell 工具方便地读写。</p> <p>几个核心文件：</p> <ul> <li><code class="language-plaintext highlighter-rouge">AGENT.md</code> — 总纲，定义 Agent 的行为规范</li> <li><code class="language-plaintext highlighter-rouge">SOUL.md</code> — 人格特质、说话风格、价值观（修改时必须通知用户）</li> <li><code class="language-plaintext highlighter-rouge">IDENTITY.md</code> — 外在标识：名字、类型、头像</li> <li><code class="language-plaintext highlighter-rouge">USER.md</code> — 用户档案：称呼、偏好、习惯</li> <li><code class="language-plaintext highlighter-rouge">TOOLS.md</code> — 可用工具清单</li> <li><code class="language-plaintext highlighter-rouge">BOOTSTRAP.md</code> — 首次启动的引导脚本，用完即删</li> <li><code class="language-plaintext highlighter-rouge">MEMORY.md</code> — 长期记忆</li> </ul> <h3 id="极简主义的措辞">极简主义的措辞</h3> <p>OpenClaw 的 Prompt 措辞非常精炼。比如要求群聊里不要每条都回复，它用了一句 <code class="language-plaintext highlighter-rouge">Quality &gt; quantity</code>；要求遇到不确定的事情就问用户，用了一句 <code class="language-plaintext highlighter-rouge">Ask anything you're uncertain about</code>。</p> <p>这种风格值得学习。我们写提示词的时候容易越写越啰嗦，试图覆盖各种边界情况，结果 token 消耗巨大，重点反而模糊了。每一个 token 都是有成本的，在需要注入大量配置文件的情况下尤其如此。</p> <h2 id="context-engineering在有限窗口里做更多事">Context Engineering：在有限窗口里做更多事</h2> <p>Prompt Engineering 解决的是”做什么”，Context Engineering 解决的是”如何在有限的上下文窗口里做得更好”。</p> <p>这部分可以从三个角度看：Skills 机制、上下文压缩/修剪、Memory 系统。</p> <h3 id="skills-的渐进式披露">Skills 的渐进式披露</h3> <p>OpenClaw 默认不具备所有能力。它通过一个类似 App Store 的市场（ClawHub）来扩展技能。关键在于：系统不会一次性把所有 Skill 的详细内容塞进上下文，而是先只加载名称和描述，判断需要用哪个，再去读对应的 <code class="language-plaintext highlighter-rouge">SKILL.md</code>。</p> <p>这就是 Anthropic 提出的<strong>渐进式披露（Progressive Disclosure）</strong>——按需加载，避免上下文爆炸。</p> <blockquote> <h5 id="warning">WARNING</h5> <p class="block-warning">Skills 的开放也带来了安全风险。Skill 包里包含可执行脚本，恶意开发者可能植入后门。OpenClaw 近期在这方面加强了鉴权和管控。</p> </blockquote> <h3 id="上下文压缩compaction">上下文压缩（Compaction）</h3> <p>对话越来越长，Context Window 总会不够用。OpenClaw 的策略是：保留最近几轮对话的原文，把更早的历史压缩成摘要。</p> <p>源码在 <code class="language-plaintext highlighter-rouge">src/agents/compaction.ts</code>，核心逻辑：</p> <ol> <li>把旧消息切分成多个 chunk（自适应分块，每块约占上下文的 40%）</li> <li>每个 chunk 独立生成 Summary</li> <li>合并所有 Summary 作为压缩后的历史</li> </ol> <p>压缩时会特别保留：活跃任务、重要决策、TODO、UUID 等标识符（不能让模型自己瞎改）。</p> <p>还有一些工程细节：5 分钟超时保护、压缩期间加写锁、可以配置用便宜的模型来做压缩。</p> <h3 id="修剪pruning">修剪（Pruning）</h3> <p>工具调用的返回结果是占上下文的大户。一个大文件的读取结果可能瞬间消耗数万 token。</p> <p>OpenClaw 的修剪策略是<strong>头尾保留，中间省略</strong>——因为报错信息通常在开头和结尾，JSON 的结构定义也在头部。裁剪比例控制在 50% 以内。</p> <p>两者的区别：</p> <table> <thead> <tr> <th>特性</th> <th>压缩（Compaction）</th> <th>修剪（Pruning）</th> </tr> </thead> <tbody> <tr> <td>做法</td> <td>调用 LLM 生成摘要替换旧消息</td> <td>规则裁剪，直接删减</td> </tr> <tr> <td>信息</td> <td>摘要保留关键信息</td> <td>信息直接丢失</td> </tr> <tr> <td>成本</td> <td>需要额外的 LLM 调用</td> <td>低成本</td> </tr> <tr> <td>场景</td> <td>对话历史太长</td> <td>工具返回结果太大</td> </tr> </tbody> </table> <h3 id="memory-双层管理">Memory 双层管理</h3> <p>大模型每次会话都是”失忆”的。想要跨会话记住东西，就得靠外部存储。</p> <p>OpenClaw 的做法是双层记忆：</p> <ul> <li><strong><code class="language-plaintext highlighter-rouge">MEMORY.md</code>（长期记忆）</strong>：存储高价值信息，每次对话自动注入到 System Prompt（截断到 200 行）</li> <li><strong><code class="language-plaintext highlighter-rouge">memory/日期.md</code>（每日笔记）</strong>：细节化的日常记录，通过搜索访问</li> </ul> <p>写入方面，除了用户主动说”记住这个”之外，会话结束时还会自动触发 Memory Flush，把关键信息归档。</p> <p>读取方面，用 BM25 + 向量匹配双路召回。每日笔记还有时间衰减机制，半衰期 30 天——30 天前的记忆权重减半，90 天前只剩 1/8，模拟人类的”自然遗忘”。</p> <table> <thead> <tr> <th>特性</th> <th>MEMORY.md</th> <th>memory/日期.md</th> </tr> </thead> <tbody> <tr> <td>数量</td> <td>只有一个</td> <td>每天一个</td> </tr> <tr> <td>写入</td> <td>覆盖或编辑</td> <td>追加</td> </tr> <tr> <td>注入方式</td> <td>每次对话自动注入</td> <td>只通过搜索访问</td> </tr> <tr> <td>衰减</td> <td>不衰减</td> <td>随时间衰减</td> </tr> </tbody> </table> <h2 id="harness-engineering给野马套上缰绳">Harness Engineering：给野马套上缰绳</h2> <p>这是一个比较新的概念。Anthropic 和 OpenAI 分别在 2025 年底和 2026 年初提出了相关的论述。</p> <p>简单说：Prompt Engineering 告诉模型”做什么”，Context Engineering 让模型”做得更好”，Harness Engineering 确保模型”可控地做”。</p> <h3 id="为什么需要-harness">为什么需要 Harness</h3> <p>没有 Harness 的 Agent 容易出问题：</p> <ul> <li>写完代码就认为完成了，不跑测试</li> <li>遇到错误陷入死循环</li> <li>执行高风险操作（删文件、调外部 API）时没有确认机制</li> </ul> <p>Harness 就是在模型之外建立一套约束机制，让这些问题有工程化的解决方案。</p> <h3 id="harness-vs-workflow">Harness vs Workflow</h3> <p>这两个概念容易混淆。我的理解是，核心区别在于<strong>主导权</strong>：</p> <ul> <li><strong>Workflow</strong>：人预定义固定路径（A → B → C），模型只是其中一个节点。主导权在人。</li> <li><strong>Harness</strong>：模型仍然有自主规划和迭代的权利，但在关键节点有约束和校验。主导权在模型，但有”缰绳”。</li> </ul> <blockquote> <h5 id="note">Note</h5> <p class="block-tip">在基座模型越来越强的趋势下，Harness 比 Workflow 更能发挥模型本身的能力，同时又不至于完全失控。</p> </blockquote> <h3 id="openclaw-的-harness-实践">OpenClaw 的 Harness 实践</h3> <p><strong>Hook 系统</strong>：在 Agent 运行的关键节点插入自定义逻辑。</p> <table> <thead> <tr> <th>钩子</th> <th>时机</th> <th>用途</th> </tr> </thead> <tbody> <tr> <td>before_tool_call</td> <td>执行工具前</td> <td>参数校验、拦截</td> </tr> <tr> <td>after_tool_call</td> <td>工具执行后</td> <td>结果处理</td> </tr> <tr> <td>before_compaction</td> <td>压缩前</td> <td>标注或观察</td> </tr> <tr> <td>message_received</td> <td>收到消息时</td> <td>预处理</td> </tr> </tbody> </table> <p>比如可以在 <code class="language-plaintext highlighter-rouge">before_tool_call</code> 里用正则校验参数格式，把错误拦截在执行之前。一次配置，所有工具调用都能生效。</p> <p><strong>三层安全沙箱</strong>：文件系统沙箱（限制访问范围）、命令执行沙箱（白名单 + 人工确认）、网络访问沙箱（白名单域名）。</p> <p><strong>Human-in-the-Loop</strong>：遇到不确定或高风险操作时暂停执行，等待人工确认。这是 Harness 赋予人类的最终控制权。</p> <h2 id="一些思考">一些思考</h2> <p>看完 OpenClaw 的源码，我觉得真正有价值的不是它的产品形态，而是这些设计思路：</p> <ol> <li>System Prompt 不要写成一坨，要模块化、按需加载</li> <li>上下文管理是 Agent 系统的核心工程挑战，压缩和修剪缺一不可</li> <li>记忆系统要分层，长期记忆和短期记忆的管理策略完全不同</li> <li>不能指望模型”自觉”，关键节点的约束必须是工程化的</li> </ol> <p>这些东西不绑定 OpenClaw，在设计任何 Agent 系统的时候都适用。</p>]]></content><author><name></name></author><category term="技术"/><category term="AI"/><category term="Agent"/><summary type="html"><![CDATA[what can we learn from OpenClaw's architecture design]]></summary></entry><entry><title type="html">关于学习</title><link href="https://xuyuanzhe.github.io/blog/2026/college/" rel="alternate" type="text/html" title="关于学习"/><published>2026-03-31T15:00:00+00:00</published><updated>2026-03-31T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2026/college</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2026/college/"><![CDATA[<p>张雪峰很有感染力的一段话:</p> <p>对于学习，不要给孩子讲大道理，</p> <p>你跟他说考个好高中好大学，</p> <p>以后找个好工作，他听不明白的，</p> <p>他看不懂父母为什么苦口婆心</p> <p>的去劝他好好学习，</p> <p>他觉得打工比学习轻松很多。</p> <p>要用孩子的话说给孩子听，</p> <p>给孩子选择的机会。</p> <p>父母是孩子的第一任老师，</p> <p>走进孩子的心，正确引导，静待花开。</p> <p>告诉孩子，考大学是选择人生的第一步。你知道吗，同济大学拥有三十三个食堂，</p> <p>美食应有尽有，还曾上过综艺节目。</p> <p>哈工大在校园里竟然可以发射火箭。</p> <p>华中科技大学有多大?五站地铁都装不下。</p> <p>你喜欢美丽的风景、浪漫的生活吗?</p> <p>那一定不要错过下面这几个大学!</p> <p>武汉大学整个校园都堪比五a景区，</p> <p>走在校园内就能欣赏到浪漫的樱花。</p> <p>躺在厦门大学的宿舍，</p> <p>你能听到海浪声闲时走几分钟，</p> <p>就能到达美丽的白城沙滩。</p> <p>孩子，你现在躺沙发上玩手机很舒服，</p> <p>可是人生要自己去经历，去感受啊!</p> <p>你只知道刷视频，玩游戏，</p> <p>看的是别人的快乐，荒废的是自己的人生。</p> <p>张雪峰曾说过:</p> <p>如果你不好好学习，一旦掉入社会底层，</p> <p>和一群没有素质的人混在一起。</p> <p>你就记住，你永远会被欺负，</p> <p>永无翻身之时。</p> <p>你现在最大的痛苦，只是熬夜背书，</p> <p>学不好最多被老师和父母批评。</p> <p>但是等到将来，你最大的痛苦，</p> <p>是看着同学有房、有车，有完美的伴侣，</p> <p>而你却一无所有，望尘莫及。</p> <p>所以，父母告诉孩子要好好学习，</p> <p>将来考一个好大学，孩子没什么概念，</p> <p>是因为孩子对自己的人生没有选择权。</p> <p>你把残酷的现实摆在他面前</p> <p>告诉孩子，现在读书确实很辛苦，</p> <p>你也没有动力，可你有没有想过以后，</p> <p>如果以后遇到喜欢东西，喜欢的人。</p> <p>你拿什么去追求?</p> <p>孩子其实并非不听父母的话，</p> <p>而是他听不懂，他对未来是无知的。</p> <p>现在的舒适和未来的迷茫，</p> <p>你猜孩子怎么选?</p> <p>所以，才需要父母给孩子种下大学梦，</p> <p>让他对好大学心生向往，并为之努力，</p> <p>这才是父母送给孩子最好的礼物。</p>]]></content><author><name></name></author><category term="阅读"/><category term="家庭"/><category term="教育"/><summary type="html"><![CDATA[张雪峰很有感染力的一段话]]></summary></entry><entry><title type="html">Pyarmor 包</title><link href="https://xuyuanzhe.github.io/blog/2026/code-confusion/" rel="alternate" type="text/html" title="Pyarmor 包"/><published>2026-01-14T15:00:00+00:00</published><updated>2026-01-14T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2026/code-confusion</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2026/code-confusion/"><![CDATA[<h1 id="尝试使用-pyarmor-包混淆-python-服务">尝试使用 pyarmor 包混淆 python 服务</h1> <h2 id="step1-安装">step1 安装</h2> <p>在虚拟环境中使用 pip 下载</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uv pip <span class="nb">install </span>pyarmor
 </code></pre></div></div> <p>查看版本</p> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uv pip list | <span class="nb">grep </span>pyarmor
 
 <span class="c"># 输出</span>
@@ -497,158 +546,4 @@ pip <span class="nb">install </span>langsmith
 
 <span class="c1"># 改进写法
 </span><span class="n">count_new</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">log</span><span class="p">[</span><span class="sh">"</span><span class="s">level</span><span class="sh">"</span><span class="p">]</span> <span class="o">==</span> <span class="sh">"</span><span class="s">error</span><span class="sh">"</span> <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">logs</span><span class="p">)</span>
-</code></pre></div></div> <h3 id="五案例-b布尔参与数值运算的坑">五、案例 B：布尔参与数值运算的坑</h3> <p>看这段代码：<code class="language-plaintext highlighter-rouge">score = True * 100</code> 结果是 100。</p> <p>但如果本意是“只有当条件成立时才赋值 100，否则不赋值”，这种写法就有歧义了。</p> <p>更清晰的写法应该是：<code class="language-plaintext highlighter-rouge">score = 100 if condition else 0</code></p> <p>代码的意图一目了然，不会给后来维护的人制造麻烦。</p>]]></content><author><name></name></author><category term="技术"/><category term="Python"/><category term="教学"/><summary type="html"><![CDATA[bool]]></summary></entry><entry><title type="html">yml &amp;amp; yaml ?</title><link href="https://xuyuanzhe.github.io/blog/2025/yaml/" rel="alternate" type="text/html" title="yml &amp;amp; yaml ?"/><published>2025-08-11T15:00:00+00:00</published><updated>2025-08-11T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2025/yaml</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2025/yaml/"><![CDATA[<h2 id="背景">背景</h2> <ul> <li> <p>YAML 的来历<br/> YAML 的全称最初可能是 “Yet Another Markup Language”（又一个标记语言），后来为了凸显它是数据格式而非文档标记，被幽默地改成了 “YAML Ain’t Markup Language”（YAML 不是标记语言）</p> </li> <li> <p>YAML 的用途<br/> 它是“阅读友好”的数据序列化格式，简洁且结构清晰，在 DevOps、CI/CD、容器编排等各类场景里大杀四方，尤其是 Kubernetes、GitHub Actions、Docker Compose 等工具里，到处可见它的身影。</p> </li> </ul> <h2 id="yaml-和-yml-的区别">.yaml 和 .yml 的区别</h2> <ul> <li> <p>本质上没有区别<br/> 文件后缀 .yaml 和 .yml 在语法和内容上是一样的，读取内容不受影响，解析器也统统支持。</p> </li> <li> <p>为什么还存在两个？<br/> 这完全是历史造成的小插曲——早期系统（特别是 Windows）喜欢限制扩展名为三个字符，因而 .yml 应运而生。而现代系统对扩展名长度不再有限制，.yaml 已成为“推荐使用”的标准。</p> </li> <li> <p>实际建议是什么？<br/> 建议新项目使用 .yaml，它更直观、标准；但旧项目或者兼容性考虑仍应支持 .yml。</p> </li> </ul> <h2 id="yaml-的语法">YAML 的语法</h2> <ul> <li>缩进统一使用空格别用 Tab</li> <li>保持简单清晰，别写一堆花里胡哨的嵌套</li> <li>常用 yamllint 工具帮你验语法</li> <li>选用有描述性的键名，便于理解和维护</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 键值对</span>
-<span class="na">name</span><span class="pi">:</span> <span class="s">Keploy</span>
-<span class="na">language</span><span class="pi">:</span> <span class="s">YAML</span>
-<span class="na">version</span><span class="pi">:</span> <span class="m">1.0</span>
-
-<span class="c1"># 列表</span>
-<span class="na">languages</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">Go</span>
-  <span class="pi">-</span> <span class="s">Python</span>
-  <span class="pi">-</span> <span class="s">JavaScript</span>
-
-<span class="c1"># 嵌套</span>
-<span class="na">database</span><span class="pi">:</span>
-  <span class="na">host</span><span class="pi">:</span> <span class="s">localhost</span>
-  <span class="na">port</span><span class="pi">:</span> <span class="m">5432</span>
-  <span class="na">username</span><span class="pi">:</span> <span class="s">admin</span>
-</code></pre></div></div>]]></content><author><name></name></author><category term="技术"/><category term="Docker"/><summary type="html"><![CDATA[傻傻分不清楚]]></summary></entry><entry><title type="html">Python 进阶之 __init__.py</title><link href="https://xuyuanzhe.github.io/blog/2025/init/" rel="alternate" type="text/html" title="Python 进阶之 __init__.py"/><published>2025-08-08T15:00:00+00:00</published><updated>2025-08-08T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2025/init</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2025/init/"><![CDATA[<h1 id="一模块和包">一、模块和包</h1> <ul> <li>模块：就是一个 <code class="language-plaintext highlighter-rouge">.py</code> 文件，里头写了变量、函数、类等等。比如你有个 <code class="language-plaintext highlighter-rouge">math_tools.py</code>，专门放数学函数，那它就是一个模块。</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_tools.py
-</span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-
-<span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
-</code></pre></div></div> <p>用的时候就很直接：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">math_tools</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="n">math_tools</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># 输出 8
-</span></code></pre></div></div> <ul> <li>包：一整个文件夹，里面可以塞好多个模块文件。比如你有个 math_utils 文件夹，里面有一堆数学相关的 .py 文件，那么这个文件夹就是一个包。</li> </ul> <h1 id="二为什么出现了-initpy">二、为什么出现了 <strong>init</strong>.py</h1> <p>在 Python 3.3 以前，想让一个文件夹被认出来是包，你必须在里面放一个 <strong>init</strong>.py。这就是它的“出生证”。</p> <p>Python 3.3 之后，官方稍微放松了规定，即使没有它，解释器也能识别出“命名空间包”。 但现实是，大多数公司项目还是会老老实实加上这个文件，原因有三：</p> <ol> <li>明确标记：防止工具或解释器搞混，把包当普通文件夹。</li> <li>兼容旧版本：有些老项目或依赖没更新，少了它会直接跪。</li> <li>自定义导入逻辑：可以在包加载时执行额外的初始化动作。</li> </ol> <h1 id="三initpy-有什么用">三、<strong>init</strong>.py 有什么用？</h1> <h2 id="1-把包当做模块使用">1. 把包当做模块使用</h2> <p>如果你不想每次都 import math_utils.basic 这样一层层写，可以在 <strong>init</strong>.py 里提前暴露子模块内容。</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_utils/__init__.py
-</span><span class="kn">from</span> <span class="n">.basic</span> <span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">subtract</span>
-<span class="kn">from</span> <span class="n">.advanced</span> <span class="kn">import</span> <span class="n">power</span>
-</code></pre></div></div> <p>于是用起来就变成：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">math_utils</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="n">math_utils</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">math_utils</span><span class="p">.</span><span class="nf">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-</code></pre></div></div> <p>这样外部调用者就不需要知道包的内部结构，体验更丝滑。</p> <h2 id="2-包初始化操作">2. 包初始化操作</h2> <p>有些项目会在 <strong>init</strong>.py 里写启动信息、加载配置等：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_utils/__init__.py
-</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">数学工具包加载成功！</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div> <p>只要 import math_utils，这行代码就会被执行。 这种方式虽然简单粗暴，但对调试和日志记录特别方便。</p> <h2 id="3-动态导入子模块">3. 动态导入子模块</h2> <p>在大型项目中，包里的模块多到数不过来，一个个写导入太傻。于是就有人用动态导入一把梭：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_utils/__init__.py
-</span><span class="kn">import</span> <span class="n">os</span>
-<span class="kn">import</span> <span class="n">importlib</span>
-
-<span class="n">package_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="nf">listdir</span><span class="p">(</span><span class="n">package_path</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">module</span><span class="p">.</span><span class="nf">endswith</span><span class="p">(</span><span class="sh">"</span><span class="s">.py</span><span class="sh">"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">module</span> <span class="o">!=</span> <span class="sh">"</span><span class="s">__init__.py</span><span class="sh">"</span><span class="p">:</span>
-        <span class="n">module_name</span> <span class="o">=</span> <span class="n">module</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
-        <span class="n">importlib</span><span class="p">.</span><span class="nf">import_module</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">__name__</span><span class="si">}</span><span class="s">.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div> <h2 id="4-控制暴露的内容">4. 控制暴露的内容</h2> <p>有时候，我们并不想让外部随便访问所有模块，就可以用 <strong>all</strong> 来管控：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_utils/__init__.py
-</span><span class="kn">from</span> <span class="n">.basic</span> <span class="kn">import</span> <span class="n">add</span><span class="p">,</span> <span class="n">subtract</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">add</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">subtract</span><span class="sh">"</span><span class="p">]</span>
-</code></pre></div></div> <p>这样 from math_utils import * 时，只能用 add 和 subtract，其他隐藏得严严实实。</p> <h2 id="5-懒加载">5. 懒加载</h2> <p>懒加载能显著提升性能，尤其是大项目启动的时候：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_utils/__init__.py
-</span><span class="kn">import</span> <span class="n">importlib</span>
-
-<span class="k">def</span> <span class="nf">lazy_import</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">importlib</span><span class="p">.</span><span class="nf">import_module</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">__name__</span><span class="si">}</span><span class="s">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="n">basic</span> <span class="o">=</span> <span class="nf">lazy_import</span><span class="p">(</span><span class="sh">"</span><span class="s">basic</span><span class="sh">"</span><span class="p">)</span>
-</code></pre></div></div> <p>只有在第一次真正用到 <code class="language-plaintext highlighter-rouge">basic</code> 时，才会去加载它。</p> <h2 id="6-版本管理">6. 版本管理</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math_utils/__init__.py
-</span><span class="n">__version__</span> <span class="o">=</span> <span class="sh">"</span><span class="s">1.0.0</span><span class="sh">"</span>
-</code></pre></div></div> <p>调用时：</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">math_utils</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">math_utils</span><span class="p">.</span><span class="n">__version__</span><span class="p">)</span>
-</code></pre></div></div> <p>方便清晰，还能在多人协作时快速确认版本。</p> <h1 id="几个建议">几个建议</h1> <ol> <li>定要加，哪怕是空的，这样对兼容性和可维护性都好。</li> <li>尽量简洁，不要在里面搞太多复杂逻辑，否则导入包的时候会莫名变慢。</li> <li>合理用 <code class="language-plaintext highlighter-rouge">__all__</code>，防止暴露太多内部细节。</li> <li>动态导入要慎用，虽然方便，但可能带来隐形性能问题。</li> </ol>]]></content><author><name></name></author><category term="技术"/><category term="Python"/><summary type="html"><![CDATA[一个容易被忽略的文件]]></summary></entry><entry><title type="html">Python uv 包的应用</title><link href="https://xuyuanzhe.github.io/blog/2025/uv/" rel="alternate" type="text/html" title="Python uv 包的应用"/><published>2025-08-05T15:00:00+00:00</published><updated>2025-08-05T15:00:00+00:00</updated><id>https://xuyuanzhe.github.io/blog/2025/uv</id><content type="html" xml:base="https://xuyuanzhe.github.io/blog/2025/uv/"><![CDATA[<h2 id="安装">安装</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LsSf</span> https://astral.sh/uv/install.sh | sh
-
-brew <span class="nb">install </span>uv
-</code></pre></div></div> <h2 id="新项目启动">新项目启动</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 创建项目</span>
-uv init myproject
-<span class="nb">cd </span>myproject
-<span class="c"># 添加依赖</span>
-uv add requests pandas numpy matplotlib
-<span class="c"># 添加开发工具</span>
-uv add pytest black ruff <span class="nt">--dev</span>
-<span class="c"># 运行代码（自动激活环境）</span>
-uv run python user/path/myproject/main.py
-</code></pre></div></div> <h2 id="docker-部署准备">docker 部署准备</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 生成 requirements.txt 文件</span>
-uv <span class="nb">export</span> <span class="nt">--format</span> requirements-txt <span class="o">&gt;</span> requirements.txt
-<span class="c"># 构建发布包</span>
-uv build
-<span class="c"># 发布到 pypi</span>
-uv publish
-</code></pre></div></div> <h2 id="团队协作">团队协作</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 拉代码</span>
-git clone https://github.com/username/myproject.git
-<span class="nb">cd </span>myproject
-<span class="c"># 同步依赖</span>
-uv <span class="nb">sync</span>
-<span class="c"># 新增依赖</span>
-uv add new-package
-<span class="c"># 新增后通知其他成员</span>
-git add uv.lock pyproject.toml
-git commit <span class="nt">-m</span> <span class="s2">"add new-package dependency"</span>
-</code></pre></div></div> <h2 id="常用命令查询">常用命令查询</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 快速添加依赖</span>
-uv add requests           <span class="c"># 最新版本</span>
-uv add <span class="s2">"django&gt;=3.2,&lt;4.0"</span> <span class="c"># 指定版本</span>
-uv add pytest <span class="nt">--dev</span>       <span class="c"># 添加开发依赖</span>
-
-uv add jupyter <span class="nt">--group</span> notebook <span class="c"># 分组管理</span>
-uv add mysql-connector-python <span class="nt">--optional</span> database <span class="c"># 可选依赖</span>
-
-<span class="c"># 环境同步</span>
-uv <span class="nb">sync</span>       <span class="c"># 同步所有依赖</span>
-uv <span class="nb">sync</span> <span class="nt">--dev</span> <span class="c"># 同步开发依赖</span>
-uv <span class="nb">sync</span> <span class="nt">--group</span> docs <span class="nt">--group</span> <span class="nb">test</span> <span class="c"># 同步特定组依赖</span>
-
-<span class="c"># python 版本管理</span>
-uv python list <span class="c"># 列出所有版本</span>
-uv python <span class="nb">install </span>3.10 <span class="c"># 安装指定版本</span>
-uv python pin 3.10  <span class="c"># 为项目指定版本</span>
-uv python unpin <span class="c"># 取消指定版本</span>
-uv python uninstall 3.10 <span class="c"># 卸载指定版本</span>
-uv python use 3.10 <span class="c"># 临时切换</span>
-uv run <span class="nt">--python</span> 3.12 pytest <span class="c"># 指定版本执行</span>
-uv run <span class="nt">--python</span> 3.10 pytest <span class="c"># 指定版本执行</span>
-
-<span class="c"># 工具安装</span>
-uv tool <span class="nb">install </span>black ruff jupyter <span class="c"># 安装全局工具</span>
-uv tool run black <span class="nb">.</span>     <span class="c"># 直接运行工具 无需安装</span>
-uv tool run ruff check  <span class="c"># 直接运行工具 无需安装</span>
-uv tool list            <span class="c"># 列出所有工具</span>
-uv tool upgrade black   <span class="c"># 升级工具</span>
-uv tool uninstall black <span class="c"># 卸载工具</span>
-
-<span class="c"># 从 pip + venv 迁移</span>
-uv init
-uv add <span class="nt">-r</span> requirements.txt
-
-<span class="c"># 从 poerty 迁移</span>
-uv <span class="nb">sync</span>
-
-<span class="c"># 从 pipenv 迁移</span>
-pipenv requirements <span class="o">&gt;</span> requirements.txt
-uv init
-uv add <span class="nt">-r</span> requirements.txt
-<span class="nb">rm </span>Pipfile Pipfile.lock <span class="c"># 清理旧文件</span>
-
-<span class="c"># 清理缓存</span>
-uv cache clean
-
-<span class="c"># 重建环境</span>
-<span class="nb">rm</span> <span class="nt">-rf</span> .venv <span class="o">&amp;&amp;</span> uv <span class="nb">sync</span>
-
-<span class="c"># 查看依赖树</span>
-uv tree
-
-<span class="c"># 查看配置</span>
-uv <span class="nt">--version</span>
-
-<span class="c"># 依赖冲突解决</span>
-uv lock <span class="nt">--resolution</span> lowest-direct
-
-<span class="c"># 验证环境一致性</span>
-uv lock <span class="nt">--check</span>
-
-<span class="c"># 强制重新解析</span>
-uv lock <span class="nt">--upgrade</span>
-</code></pre></div></div> <h2 id="在现有项目中创建虚拟环境">在现有项目中创建虚拟环境</h2> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uv venv <span class="nt">--python</span> 3.10.12 .venv-project
-
-uv pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
-</code></pre></div></div> <h2 id="pycharm-中的配置">Pycharm 中的配置</h2> <p>使用 Pycharm 配置 uv 解释器，jetbrains 提供了官方文档：https://www.jetbrains.com/zh-cn/help/pycharm/uv.html</p> <p>但看下来感觉说的并不是很清楚，下面的 uv env use 依然不知道填什么</p> <p><img src="/assets/img/posts/202507251102554.png" class="card-img-top" width="100%" height="auto" alt="project thumbnail" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/></p> <p>研究后只要执行 <code class="language-plaintext highlighter-rouge">uv run python -c "import sys; print(sys.executable)"</code> 代码填入即可</p>]]></content><author><name></name></author><category term="技术"/><category term="Python"/><category term="uv"/><summary type="html"><![CDATA[淘汰 pip]]></summary></entry></feed>
+</code></pre></div></div> <h3 id="五案例-b布尔参与数值运算的坑">五、案例 B：布尔参与数值运算的坑</h3> <p>看这段代码：<code class="language-plaintext highlighter-rouge">score = True * 100</code> 结果是 100。</p> <p>但如果本意是“只有当条件成立时才赋值 100，否则不赋值”，这种写法就有歧义了。</p> <p>更清晰的写法应该是：<code class="language-plaintext highlighter-rouge">score = 100 if condition else 0</code></p> <p>代码的意图一目了然，不会给后来维护的人制造麻烦。</p>]]></content><author><name></name></author><category term="技术"/><category term="Python"/><category term="教学"/><summary type="html"><![CDATA[bool]]></summary></entry></feed>
