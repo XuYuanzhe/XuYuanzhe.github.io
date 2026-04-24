@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-openclaw-记忆系统源码拆解-从写入到晋升的全链路",
+        },{id: "post-macos-系统安装赫尔墨斯",
+        
+          title: "macOS 系统安装赫尔墨斯",
+        
+        description: "Install Hermes Agent + hermes-web-ui on macOS Intel",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/Hermes-macOS-Intel/";
+          
+        },
+      },{id: "post-openclaw-记忆系统源码拆解-从写入到晋升的全链路",
         
           title: "OpenClaw 记忆系统源码拆解：从写入到晋升的全链路",
         
@@ -43,6 +54,17 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2026/openclaw-design-philosophy/";
+          
+        },
+      },{id: "post-agent-memory-架构思考-从本质命题到系统设计",
+        
+          title: "Agent Memory 架构思考：从本质命题到系统设计",
+        
+        description: "rethinking memory architecture for AI agents",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/agent-memory-architecture/";
           
         },
       },{id: "post-关于学习",
