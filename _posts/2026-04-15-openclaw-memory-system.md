@@ -3,7 +3,7 @@ layout: post
 title: OpenClaw 记忆系统源码拆解：从写入到晋升的全链路
 date: 2026-04-15 15:00:00
 description: how OpenClaw's memory pipeline works and where it falls short
-tags: AI Agent
+tags: AI
 categories: 技术
 giscus_comments: true
 pretty_table: true

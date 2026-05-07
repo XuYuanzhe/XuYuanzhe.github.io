@@ -3,7 +3,7 @@ layout: post
 title: 从 OpenClaw 源码看 Agent 系统设计的三个维度
 date: 2026-04-13 15:00:00
 description: what can we learn from OpenClaw's architecture design
-tags: AI Agent
+tags: AI
 categories: 技术
 giscus_comments: true
 pretty_table: true

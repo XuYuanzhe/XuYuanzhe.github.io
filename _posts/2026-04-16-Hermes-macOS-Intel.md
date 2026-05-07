@@ -3,7 +3,7 @@ layout: post
 title: macOS 系统安装赫尔墨斯
 date: 2026-04-16 15:00:00
 description: Install Hermes Agent + hermes-web-ui on macOS Intel
-tags: AI Agent
+tags: AI
 categories: 技术
 giscus_comments: true
 pretty_table: true
