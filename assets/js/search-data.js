@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-macos-系统安装赫尔墨斯",
+        },{id: "post-hermes-的一些资源文档",
+        
+          title: "Hermes 的一些资源文档",
+        
+        description: "Some resource documents of Hermes",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hermes-doc/";
+          
+        },
+      },{id: "post-macos-系统安装赫尔墨斯",
         
           title: "macOS 系统安装赫尔墨斯",
         
