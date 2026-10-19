@@ -23,9 +23,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-redis-大全",
+        },{id: "post-高性价比人生指南",
         
-          title: "Redis 大全",
+          title: "高性价比人生指南",
         
         description: "",
         section: "Posts",
@@ -34,9 +34,9 @@ ninja.data = [{
             window.location.href = "/assets/pdf/how_to_live_better.pdf";
           
         },
-      },{id: "post-个人简历模板",
+      },{id: "post-简历模板",
         
-          title: "个人简历模板",
+          title: "简历模板",
         
         description: "",
         section: "Posts",
