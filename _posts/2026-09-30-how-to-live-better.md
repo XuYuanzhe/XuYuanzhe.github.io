@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Redis 大全
+title: 高性价比人生指南
 date: 2026-09-30 15:00:00
 tags: 阅读
 categories: 书

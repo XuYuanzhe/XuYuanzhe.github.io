@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 个人简历模板
+title: 简历模板
 date: 2026-08-11 15:00:00
 tags: 求职
 categories: 杂谈
