@@ -23,7 +23,51 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-hermes-的一些资源文档",
+        },{id: "post-redis-大全",
+        
+          title: "Redis 大全",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/assets/pdf/how_to_live_better.pdf";
+          
+        },
+      },{id: "post-个人简历模板",
+        
+          title: "个人简历模板",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/resume-template/";
+          
+        },
+      },{id: "post-langgraph-底层原理-它是怎么把-llm-变成一台状态机的",
+        
+          title: "LangGraph 底层原理：它是怎么把 LLM 变成一台状态机的",
+        
+        description: "深入解析 LangGraph 的状态机设计，从 StateGraph 到 Reducer，看懂 LLM Agent 的执行引擎",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/langgraph-state-machine/";
+          
+        },
+      },{id: "post-ai-面试问题",
+        
+          title: "AI 面试问题",
+        
+        description: "AI interview questions",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ai-interview/";
+          
+        },
+      },{id: "post-hermes-的一些资源文档",
         
           title: "Hermes 的一些资源文档",
         
